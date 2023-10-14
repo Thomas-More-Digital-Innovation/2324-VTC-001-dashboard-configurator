@@ -48,6 +48,40 @@ nav {
   align-items: center;
 }
 
+.fullscreen {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.fullscreenrev {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.flexrow {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.flexcol {
+  display: flex;
+  flex-direction: column;
+}
+
+.full {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .line {
   width: 20vw;
   background-color: #21bdb9;
@@ -60,3 +94,39 @@ nav {
   margin-top: 3rem;
   color: #001b54;
 }
+
+.test {
+  width: 100px;
+  height: 100px;
+}
+
+.padding {
+  padding: 100px;
+}
+
+.red {
+  background-color: red;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.green {
+  background-color: green;
+}
+
+.offwhite {
+  background-color: rgb(245,245,245);
+}
+
+/* 
+Colors:
+darkblue: rgb(0,27,84)
+blue3: rgb(8, 67, 109)
+blue2: rgb(17, 108, 135)
+blue1: rgb(25, 149, 161)
+blue: rgb(33,189,185)
+red: rgb(211,90,58)
+offwhite: rgb(245,245,245)
+*/
