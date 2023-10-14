@@ -100,8 +100,16 @@ nav {
   height: 100px;
 }
 
-.padding {
+.p100 {
   padding: 100px;
+}
+
+.p20 {
+  padding: 20px;
+}
+
+.ptnav {
+  padding-top: 4rem;
 }
 
 .red {

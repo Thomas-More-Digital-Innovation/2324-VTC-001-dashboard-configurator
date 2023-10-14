@@ -99,27 +99,35 @@ new Chart(ctxs3, {
 // --- MULTIPLE VIEW CHARTS --- //
 //
 new Chart(ctxm1, {
-  type: "doughnut",
+  type: "line",
   data: {
-    labels: ["Happy", "Sad", "Angry", "Neutral"],
+    labels: ["Jan", "Feb", "Mar", "Apr", "May"],
     datasets: [
       {
-        label: "My First Dataset",
-        data: [300, 50, 100, 150],
-        backgroundColor: [
-          "rgb(0,27,84)",
-          "rgb(8, 67, 109)",
-          "rgb(25, 149, 161)",
-          "rgb(33,189,185)",
-        ],
-        hoverOffset: 4,
+        label: "Series 1",
+        data: [10, 20, 15, 30, 25],
+        borderColor: "rgb(8, 67, 109)",
+        fill: false,
+      },
+      {
+        label: "Series 2",
+        data: [25, 15, 30, 10, 20],
+        borderColor: "rgb(25, 149, 161)",
+        fill: false,
       },
     ],
   },
   options: {
-    maintainAspectRatio: false, // Prevent fixed aspect ratio
-    responsive: false, // Disable responsiveness
-    cutout: 0,
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        beginAtZero: true,
+      },
+      y: {
+        beginAtZero: true,
+      },
+    },
   },
 });
 
