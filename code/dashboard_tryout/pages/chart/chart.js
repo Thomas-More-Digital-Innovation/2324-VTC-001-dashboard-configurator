@@ -10,15 +10,15 @@ const ctxm2 = document.getElementById("m2");
 const ctxm3 = document.getElementById("m3");
 
 // --- SINGLE-VIEW CHARTS --- //
-// Doughnut chart - s1
+// Doughnut chart - s1 {
 new Chart(ctxs1, {
   type: "doughnut",
   data: {
-    labels: ["Answer 1", "Answer 2", "Answer 3"],
+    labels: ["Ik raad het aan", "Ik raad het niet aan", "Geen mening"],
     datasets: [
       {
         label: "My First Dataset",
-        data: [300, 50, 100],
+        data: [80, 20, 10],
         backgroundColor: [
           "rgb(0,27,84)",
           "rgb(17, 108, 135)",
@@ -42,7 +42,7 @@ new Chart(ctxs2, {
   data: {
     datasets: [
       {
-        label: "Opinions",
+        label: "Oriëntatie",
         data: [
           {
             x: -10,
@@ -104,13 +104,13 @@ new Chart(ctxm1, {
     labels: ["Jan", "Feb", "Mar", "Apr", "May"],
     datasets: [
       {
-        label: "Series 1",
+        label: "Gemiddelde leeftijd 2022",
         data: [10, 20, 15, 30, 25],
         borderColor: "rgb(8, 67, 109)",
         fill: false,
       },
       {
-        label: "Series 2",
+        label: "Gemiddelde leeftijd 2023",
         data: [25, 15, 30, 10, 20],
         borderColor: "rgb(25, 149, 161)",
         fill: false,
@@ -136,7 +136,7 @@ new Chart(ctxm2, {
   data: {
     datasets: [
       {
-        label: "Year 1",
+        label: "West-Vlaanderen",
         data: [
           {
             x: 20,
@@ -152,7 +152,7 @@ new Chart(ctxm2, {
         backgroundColor: "rgb(0,27,84)",
       },
       {
-        label: "Year 2",
+        label: "Oost-Vlaanderen",
         data: [
           {
             x: 50,
@@ -168,7 +168,7 @@ new Chart(ctxm2, {
         backgroundColor: "rgb(17, 108, 135)",
       },
       {
-        label: "Year 3",
+        label: "Antwerpen",
         data: [
           {
             x: 20,
@@ -191,17 +191,17 @@ new Chart(ctxm3, {
   type: "radar",
   data: {
     labels: [
-      "Eating",
-      "Drinking",
-      "Sleeping",
-      "Designing",
-      "Coding",
-      "Cycling",
-      "Running",
+      "Verkeersdrempels",
+      "Verlaagde maximumsnelheid",
+      "Extra parkeerplaatsen",
+      "Eenrichtingstraat",
+      "Nieuw wegdek",
+      "Vrachtverkeer uitsluiten",
+      "Verbeteren signalisatie",
     ],
     datasets: [
       {
-        label: "Dataset 1",
+        label: "Voorstellen inwoners 20-30 jaar",
         data: [100, 80, 90, 70, 90, 50, 80],
         fill: true,
         backgroundColor: "rgba(0, 27, 84, 0.2)",
@@ -212,7 +212,7 @@ new Chart(ctxm3, {
         pointHoverBorderColor: "rgb(0,27,84)",
       },
       {
-        label: "Dataset 2",
+        label: "Voorstellen inwoners 30-40 jaar",
         data: [90, 80, 70, 0, 80, 90, 70],
         fill: true,
         backgroundColor: "rgba(33,189,185, 0.2)",
