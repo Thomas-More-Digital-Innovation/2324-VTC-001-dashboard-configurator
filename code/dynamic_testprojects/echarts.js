@@ -1,4 +1,45 @@
-function HorizontalBarChart(idref) {
+function CsvParser() {
+  return true;
+}
+
+function GenerateGraph(amount) {
+  let list = [];
+  let positions = ["50%", "100%", "150%"]
+
+  for (let i = 0; i < amount; i++) {
+    list.push({
+      name: "Radius Mode",
+      type: "pie",
+      radius: [20, 140],
+      center: [positions[i], "50%"],
+      roseType: "radius",
+      itemStyle: {
+        borderRadius: 5,
+      },
+      label: {
+        show: false,
+      },
+      // emphasis: {
+      //   label: {
+      //     show: true,
+      //   },
+      // },
+      data: [
+        { value: 40, name: "rose 1" },
+        { value: 33, name: "rose 2" },
+        { value: 28, name: "rose 3" },
+        { value: 22, name: "rose 4" },
+        { value: 20, name: "rose 5" },
+        { value: 15, name: "rose 6" },
+        { value: 12, name: "rose 7" },
+        { value: 10, name: "rose 8" },
+      ],
+    });
+  }
+  return list;
+}
+
+function NightingaleChart(idref, amount) {
   var chart = echarts.init(document.getElementById(idref), {
     width: 500,
     height: 400,
@@ -6,64 +47,55 @@ function HorizontalBarChart(idref) {
 
   chart.setOption(
     (option = {
-      dataset: {
-        source: [
-          ["score", "amount", "product"],
-          [47.7, 35147, "Luxemburg"],
-          [32.7, 20112, "Luik"],
-          [10.6, 101852, "Namen"],
-          [19.6, 91852, "Henegouwen"],
-          [68.1, 79146, "Waals-Brabant"],
-          [89.7, 20145, "Vlaams-Brabant"],
-          [50.1, 12755, "Limburg"],
-          [74.4, 41032, "Antwerpen"],
-          [57.1, 78254, "Oost-Vlaanderen"],
-          [89.3, 58212, "West-Vlaanderen"],
+      title: {
+        text: "Dynamic charts!!!",
+        left: "center",
+      },
+      tooltip: {
+        trigger: "item",
+        formatter: "{a} <br/>{b} : {c} ({d}%)",
+      },
+      legend: {
+        left: "center",
+        top: "bottom",
+        data: [
+          "rose1",
+          "rose2",
+          "rose3",
+          "rose4",
+          "rose5",
+          "rose6",
+          "rose7",
+          "rose8",
         ],
       },
-      grid: { containLabel: true },
-      xAxis: { name: "aantal" },
-      yAxis: { type: "category" },
-      visualMap: {
-        orient: "horizontal",
-        left: "center",
-        top: "",
-        min: 10,
-        max: 100,
-        text: ["Positief", "Negatief"],
-        // Map the score column to color
-        dimension: 0,
-        inRange: {
-          color: ["rgb(33,189,185)", "rgb(17, 108, 135)", "rgb(0,27,84)"],
+      toolbox: {
+        show: true,
+        feature: {
+          mark: { show: true },
+          dataView: { show: true, readOnly: false },
+          restore: { show: true },
+          saveAsImage: { show: true },
         },
       },
-      series: [
-        {
-          type: "bar",
-          encode: {
-            // Map the "amount" column to X axis.
-            x: "amount",
-            // Map the "product" column to Y axis
-            y: "product",
-          },
-        },
-      ],
+      series: GenerateGraph(amount)
     })
   );
-  console.log("Generating Chart Done!")
+  console.log("Generating Chart Done!");
 }
 // Function to load and parse XML
 function loadXML() {
   var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET", "data.xml", true);
+  xmlhttp.open("GET", "config.xml", true);
   xmlhttp.onreadystatechange = function () {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
       var xmlDoc = xmlhttp.responseXML;
-      displayXMLContent(xmlDoc);
+      let x = displayXMLContent(xmlDoc); //return object/list with parsed element data to be used as chart parameters
+      NightingaleChart("s1", x)
     }
   };
   xmlhttp.send();
-  console.log("Reading Done!")
+  console.log("Reading Done!");
 }
 
 // Function to display XML content in HTML
@@ -95,7 +127,9 @@ function displayXMLContent(xmlDoc) {
 
     document.body.appendChild(screenDiv);
   }
-  console.log("Parsing Done!")
-};
+  console.log("Parsing Done!");
+  return 3;
+}
 // Call the loadXML function to start the process
-loadXML()
+loadXML();
+NightingaleChart("s1", 3)
