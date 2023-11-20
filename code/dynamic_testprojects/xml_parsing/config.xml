@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dashboard>
+  <screen>
+    <row>
+      <graph></graph>
+    </row>
+  </screen>
+  <screen>
+    <row>
+      <graph></graph>
+      <graph></graph>
+    </row>
+    <row>
+      <graph></graph>
+      <graph></graph>
+    </row>
+  </screen>
+  <screen>
+    <row>
+      <graph></graph>
+      <graph></graph>
+    </row>
+    <row>
+      <graph></graph>
+    </row>
+  </screen>
+</dashboard>

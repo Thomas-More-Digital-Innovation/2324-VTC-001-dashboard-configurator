@@ -1,7 +1,3 @@
-function CsvParser() {
-  return true;
-}
-
 function GenerateGraph(amount) {
   let list = [];
   let positions = ["50%", "100%", "150%"]
@@ -41,8 +37,8 @@ function GenerateGraph(amount) {
 
 function NightingaleChart(idref, amount) {
   var chart = echarts.init(document.getElementById(idref), {
-    width: 500,
-    height: 400,
+    width: "100%",
+    height: "100%",
   });
 
   chart.setOption(
@@ -91,7 +87,7 @@ function loadXML() {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
       var xmlDoc = xmlhttp.responseXML;
       let x = displayXMLContent(xmlDoc); //return object/list with parsed element data to be used as chart parameters
-      NightingaleChart("s1", x)
+      NightingaleChart("s3", x)
     }
   };
   xmlhttp.send();
@@ -132,4 +128,3 @@ function displayXMLContent(xmlDoc) {
 }
 // Call the loadXML function to start the process
 loadXML();
-NightingaleChart("s1", 3)
