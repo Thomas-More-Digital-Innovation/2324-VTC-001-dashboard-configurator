@@ -2,26 +2,20 @@
 <dashboard>
   <screen>
     <row>
-      <graph></graph>
+      <ntgchart></ntgchart>
+      <ntgchart></ntgchart>
     </row>
   </screen>
   <screen>
     <row>
-      <graph></graph>
-      <graph></graph>
-    </row>
-    <row>
-      <graph></graph>
-      <graph></graph>
+      <ntgchart></ntgchart>
+      <ntgchart></ntgchart>
     </row>
   </screen>
   <screen>
     <row>
-      <graph></graph>
-      <graph></graph>
-    </row>
-    <row>
-      <graph></graph>
+      <ntgchart></ntgchart>
+      <ntgchart></ntgchart>
     </row>
   </screen>
 </dashboard>

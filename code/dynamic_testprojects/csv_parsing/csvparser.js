@@ -22,7 +22,7 @@ async function handleCSVFile() {
 
     // Part 1: Read the file and parse data
     const content = event.target.result;
-    const parsedData = parseCSV(content);
+    const parsedData = parseCSV(content, "dates");
 
     await NightingaleChart(parsedData);
     console.log("Graphs created successfully");
@@ -32,16 +32,33 @@ async function handleCSVFile() {
 }
 
 // Example parsing function (replace with your actual CSV parsing logic)
-function parseCSV(content) {
+function parseCSV(content, columnName) {
   const rows = content.split("\n");
-  return rows.slice(1).map((row) => {
-    const [value, name] = row.replace(/\r/g, "").split(",");
+  const headers = rows[0].split(",");
+
+  const columnIndex = headers.indexOf(columnName);
+  if (columnIndex === -1) {
+    throw new Error(`Column '${columnName}' not found`);
+  }
+
+  const columnValues = rows.slice(1).map((row) => {
+    const values = row.replace(/\r/g, "").split(",");
+    return values[columnIndex];
+  });
+
+  const uniqueElements = [...new Set(columnValues)]; // Get unique elements from the column
+
+  const uniqueOccurrences = uniqueElements.map((element) => {
+    const occurrences = columnValues.filter((value) => value === element).length;
     return {
-      value: parseInt(value),
-      name: name,
+      name: element,
+      value: occurrences,
     };
   });
+
+  return uniqueOccurrences;
 }
+
 
 function NightingaleChart(data) {
   return new Promise((resolve, reject) => {
