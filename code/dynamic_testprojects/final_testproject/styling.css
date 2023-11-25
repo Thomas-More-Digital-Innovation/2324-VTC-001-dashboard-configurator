@@ -1,3 +1,9 @@
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 /*layout for screen tag*/
 .screen {
   height: 100vh;
@@ -19,6 +25,13 @@
 .section-100 {
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-75 {
+  height: 100%;
+  width: 75%;
   display: flex;
   flex-direction: column;
 }

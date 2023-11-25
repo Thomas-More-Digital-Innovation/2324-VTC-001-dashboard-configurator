@@ -8,6 +8,14 @@
     <link rel="stylesheet" type="text/css" href="./styling.css" />
   </head>
   <body>
-    <script type="module" src="./builder.js"></script>
+    <label for="xmlInput">1. ADD CONFIG.XML FILE - STRUCTURE</label>
+    <input
+      type="file"
+      id="xmlInput"
+      accept=".xml"
+      onchange="handleXMLFile(event)"
+    />
+    <label for="fi">2. ADD CSV FILE - DATA</label>
+    <script src="./builder.js"></script>
   </body>
 </html>

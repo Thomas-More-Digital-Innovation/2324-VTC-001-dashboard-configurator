@@ -3,7 +3,7 @@
     <screen>
         <row>
             <section width="1/1">
-                <chart type="ntgchart" title="Aantal deelnemers per jaar" subtitle="Op basis van jaarlijkse bevragingen" dataColumn="JAAR bevraging">
+                <chart type="sntgchart" title="Aantal deelnemers per jaar" subtitle="Op basis van jaarlijkse bevragingen" targetColumn="JAAR bevraging">
                 </chart>
             </section>
         </row>
@@ -11,7 +11,19 @@
     <screen>
         <row>
             <section width="1/1">
-                <chart type="ntgchart" title="Raad je het aan om in jouw straat te komen wonen?" subtitle="Op basis van 3-jaarlijkse bevraging" dataColumn="M1_Raad je het aan om in jouw straat te komen wonen?">
+                <chart type="sntgchart" title="Raad je het aan om in jouw straat te komen wonen?" subtitle="Op basis van 3-jaarlijkse bevraging" targetColumn="M1_Raad je het aan om in jouw straat te komen wonen?">
+                </chart>
+            </section>
+        </row>
+    </screen>
+    <screen>
+        <row>
+            <section width="1/2">
+                <chart type="sntgchart" title="Aantal deelnemers per jaar" subtitle="Op basis van jaarlijkse bevragingen" targetColumn="JAAR bevraging">
+                </chart>
+            </section>
+            <section width="1/2">
+                <chart type="sntgchart" title="Raad je het aan om in jouw straat te komen wonen?" subtitle="Op basis van 3-jaarlijkse bevraging" targetColumn="M1_Raad je het aan om in jouw straat te komen wonen?">
                 </chart>
             </section>
         </row>
@@ -19,15 +31,7 @@
     <screen>
         <row>
             <section width="1/1">
-                <chart type="ntgchart" title="Geslacht van deelnemers" subtitle="Willekeurige selectie" dataColumn="16. Geslacht">
-                </chart>
-            </section>
-        </row>
-    </screen>
-    <screen>
-        <row>
-            <section width="1/1">
-                <chart type="a" title="Test" subtitle="Test" timeColumn="M1_Raad je het aan om in jouw straat te komen wonen?" targetColumn="JAAR bevraging">
+                <chart type="mntgchart" title="Antwoorden over de jaren" subtitle="Leefomgeving" timeColumn="JAAR bevraging" targetColumn="M1_Raad je het aan om in jouw straat te komen wonen?">
                 </chart>
             </section>
         </row>

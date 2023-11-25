@@ -1,9 +1,9 @@
 // CONSTRUCTOR //
 async function constructPage() {
   try {
-    loadXML();
     const fileInput = document.createElement("input");
     fileInput.type = "file";
+    fileInput.Id = "fi"
     const fileChangeEvent = new Promise((resolve, reject) => {
       fileInput.addEventListener("change", resolve);
     });
@@ -22,7 +22,6 @@ async function constructPage() {
     reader.readAsText(file);
     const event = await readerPromise;
 
-    // Part 1: Read the file and parse data
     const content = event.target.result;
     const graphlist = document.getElementsByClassName("graph");
     for (let i = 1; i <= graphlist.length; i++) {
@@ -30,20 +29,21 @@ async function constructPage() {
       const currentGraphType =
         graphsAttributeList[parseInt(currentGraphId)].type;
 
-      if (currentGraphType == "ntgchart") {
+      if (currentGraphType == "sntgchart") {
         const currentGraphTitle =
           graphsAttributeList[parseInt(currentGraphId)].title;
         const currentGraphSubTitle =
           graphsAttributeList[parseInt(currentGraphId)].subtitle;
-        const currentGraphDataColumn =
-          graphsAttributeList[parseInt(currentGraphId)].dataColumn;
+        const currentGraphTargetColumn =
+          graphsAttributeList[parseInt(currentGraphId)].targetColumn;
         SingleNightingaleChart(
           currentGraphId,
           currentGraphTitle,
           currentGraphSubTitle,
-          SingleNightingaleChartCsvParser(content, currentGraphDataColumn)
+          SingleNightingaleChartCsvParser(content, currentGraphTargetColumn)
         );
-      } else {
+      }
+      if (currentGraphType == "mntgchart") {
         const currentGraphTitle =
           graphsAttributeList[parseInt(currentGraphId)].title;
         const currentGraphSubTitle =
@@ -71,6 +71,7 @@ async function constructPage() {
   }
 }
 
+// === XML === //
 // XML PARSING
 let graphsAttributeList = [];
 function displayXMLContent(xmlDoc) {
@@ -99,14 +100,15 @@ function displayXMLContent(xmlDoc) {
           graphDiv.id = graphId;
           graphId += 1;
           graphDiv.classList.add("graph");
-          if (graphs[l].getAttribute("type") == "ntgchart") {
+          if (graphs[l].getAttribute("type") == "sntgchart") {
             graphsAttributeList.push({
               type: graphs[l].getAttribute("type"),
               title: graphs[l].getAttribute("title"),
               subtitle: graphs[l].getAttribute("subtitle"),
-              dataColumn: graphs[l].getAttribute("dataColumn"),
+              targetColumn: graphs[l].getAttribute("targetColumn"),
             });
-          } else {
+          }
+          if (graphs[l].getAttribute("type") == "mntgchart") {
             graphsAttributeList.push({
               type: graphs[l].getAttribute("type"),
               title: graphs[l].getAttribute("title"),
@@ -127,32 +129,51 @@ function displayXMLContent(xmlDoc) {
 
     document.body.appendChild(screenDiv);
   }
-  console.log("Parsing Done!");
+  console.log("XML Parsing Done!");
 }
 
 // XML LOADING
-function loadXML() {
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET", "config.xml", true);
-  xmlhttp.onreadystatechange = function () {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      var xmlDoc = xmlhttp.responseXML;
-      let x = displayXMLContent(xmlDoc); //return object/list with parsed element data to be used as chart parameters
+function loadXMLFile(file) {
+  return new Promise((resolve, reject) => {
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = function (event) {
+        const xmlContent = event.target.result;
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlContent, "text/xml");
+
+        resolve(xmlDoc); // Resolve with parsed XML document
+      };
+
+      reader.readAsText(file);
+    } else {
+      reject("No file selected");
     }
-  };
-  xmlhttp.send();
-  console.log("Reading Done!");
-  console.log(graphsAttributeList);
+  });
+}
+
+async function handleXMLFile(event) {
+  try {
+    const input = event.target;
+    const file = input.files[0];
+
+    const xmlDoc = await loadXMLFile(file); // Wait for XML file to load
+
+    displayXMLContent(xmlDoc); // Proceed with parsing and utilizing the XML content
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // === CSV PARSERS === //
-function SingleNightingaleChartCsvParser(content, columnName) {
+function SingleNightingaleChartCsvParser(content, targetColumn) {
   const rows = content.split("\n");
   const headers = rows[0].split(";");
 
-  const columnIndex = headers.indexOf(columnName);
+  const columnIndex = headers.indexOf(targetColumn);
   if (columnIndex === -1) {
-    throw new Error(`Column '${columnName}' not found`);
+    throw new Error(`Column '${targetColumn}' not found`);
   }
 
   const columnValues = rows.slice(1).map((row) => {
@@ -171,7 +192,6 @@ function SingleNightingaleChartCsvParser(content, columnName) {
       value: occurrences,
     };
   });
-
   return uniqueOccurrences;
 }
 
@@ -221,7 +241,7 @@ function MulitpleNightingaleChartCsvParser(
 
 // === CHART CREATIONS === //
 
-// SingleNightingaleChart - Create a nightingale chart that takes a single column as data input//
+// SingleNightingaleChart - Create a nightingale chart that takes a single column as data input //
 function SingleNightingaleChart(id, title, subtitle, data) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
@@ -301,6 +321,7 @@ function SingleNightingaleChart(id, title, subtitle, data) {
   });
 }
 
+// MultipleNightingaleChart - Create a series of nightingale chart that take a time-based column and a target column //
 function MultipleNightingaleChart(id, title, subtitle, data) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
@@ -364,7 +385,7 @@ function MultipleNightingaleChart(id, title, subtitle, data) {
       },
       tooltip: {
         trigger: "item",
-        formatter: "{b} : {c} ({d}%)",
+        formatter: "{a} - {b} : {c} ({d}%)",
       },
       toolbox: {
         show: true,
@@ -394,7 +415,7 @@ function divisionToPercentage(division) {
     return "Cannot divide by zero";
   }
 
-  const allowedPercentages = [100, 66, 50, 33, 25];
+  const allowedPercentages = [100, 75, 66, 50, 33, 25];
   const result = Math.floor((numerator / denominator) * 100);
 
   if (allowedPercentages.includes(result)) {
@@ -431,5 +452,5 @@ function generatePercentages(length) {
 
 // RUN ALL //
 constructPage()
-  .then(() => console.log("Graph created successfully"))
+  .then(() => console.log("Graphs created successfully"))
   .catch((error) => console.error("Error:", error));
