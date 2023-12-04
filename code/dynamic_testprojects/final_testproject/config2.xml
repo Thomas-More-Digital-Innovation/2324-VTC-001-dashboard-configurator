@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dashboard id="wonen">
+    <screen>
+        <row>
+            <section width="1/1">
+                <chart type="sntgchart" title="Aantal deelnemers per jaar" subtitle="Op basis van jaarlijkse bevragingen" targetColumn="JAAR bevraging">
+                    <!-- <legenda orientation="horizontal"></legenda> -->
+                    <item displayIndex="1" legendaIndex="1" changedName="Het jaar 2020">2020</item>
+                    <item displayIndex="2" legendaIndex="2" changedName="Het jaar 2021">2021</item>
+                    <item displayIndex="3" legendaIndex="3" changedName="Het jaar 2022">2022</item>
+                </chart>
+            </section>
+        </row>
+    </screen>
+</dashboard>

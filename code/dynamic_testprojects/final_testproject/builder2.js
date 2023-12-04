@@ -36,11 +36,20 @@ async function constructPage() {
           graphsAttributeList[parseInt(currentGraphId)].subtitle;
         const currentGraphTargetColumn =
           graphsAttributeList[parseInt(currentGraphId)].targetColumn;
+        const currentDisplayOrder =
+          graphsAttributeList[parseInt(currentGraphId)].displayOrder;
+        const currentLegendaOrder =
+          graphsAttributeList[parseInt(currentGraphId)].legendaOrder;
         SingleNightingaleChart(
           currentGraphId,
           currentGraphTitle,
           currentGraphSubTitle,
-          SingleNightingaleChartCsvParser(content, currentGraphTargetColumn)
+          currentLegendaOrder,
+          SingleNightingaleChartCsvParser(
+            content,
+            currentGraphTargetColumn,
+            currentDisplayOrder
+          )
         );
       }
       if (currentGraphType == "mntgchart") {
@@ -100,24 +109,33 @@ function displayXMLContent(xmlDoc) {
           graphDiv.id = graphId;
           graphId += 1;
           graphDiv.classList.add("graph");
+          let legendaOrder = [];
+          let displayOrder = [];
+          let items = graphs[l].getElementsByTagName("item");
+          for (var m = 0; m < items.length; m++) {
+            insertIntegerInOrder(
+              displayOrder,
+              items[m].getAttribute("displayIndex"),
+              items[m].textContent
+            );
+            insertIntegerInOrder(
+              legendaOrder,
+              items[m].getAttribute("legendaIndex"),
+              items[m].textContent
+            );
+          }
+
           if (graphs[l].getAttribute("type") == "sntgchart") {
             graphsAttributeList.push({
               type: graphs[l].getAttribute("type"),
               title: graphs[l].getAttribute("title"),
               subtitle: graphs[l].getAttribute("subtitle"),
               targetColumn: graphs[l].getAttribute("targetColumn"),
+              displayOrder: displayOrder,
+              legendaOrder: legendaOrder,
             });
           }
-          if (graphs[l].getAttribute("type") == "mntgchart") {
-            graphsAttributeList.push({
-              type: graphs[l].getAttribute("type"),
-              title: graphs[l].getAttribute("title"),
-              subtitle: graphs[l].getAttribute("subtitle"),
-              timeColumn: graphs[l].getAttribute("timeColumn"),
-              targetColumn: graphs[l].getAttribute("targetColumn"),
-            });
-          }
-
+          console.log(graphsAttributeList);
           sectionDiv.appendChild(graphDiv);
         }
 
@@ -130,6 +148,19 @@ function displayXMLContent(xmlDoc) {
     document.body.appendChild(screenDiv);
   }
   console.log("XML Parsing Done!");
+}
+
+function insertIntegerInOrder(arr, newInt, data) {
+  if (arr.length === 0) {
+    arr.push(data);
+  } else {
+    let index = 0;
+    while (index < arr.length && newInt > arr[index]) {
+      index++;
+    }
+    arr.splice(index, 0, data);
+  }
+  return arr;
 }
 
 // XML LOADING
@@ -167,7 +198,8 @@ async function handleXMLFile(event) {
 }
 
 // === CSV PARSERS === //
-function SingleNightingaleChartCsvParser(content, targetColumn) {
+
+function SingleNightingaleChartCsvParser(content, targetColumn, displayOrder) {
   const rows = content.split("\n");
   const headers = rows[0].split(";");
 
@@ -192,7 +224,14 @@ function SingleNightingaleChartCsvParser(content, targetColumn) {
       value: occurrences,
     };
   });
-  return uniqueOccurrences;
+
+  // Sort the uniqueOccurrences based on the provided sortArray
+  const sortedOccurrences = displayOrder.map((element) => {
+    const foundElement = uniqueOccurrences.find((obj) => obj.name === element);
+    return foundElement ? foundElement : { name: element, value: 0 };
+  });
+
+  return sortedOccurrences;
 }
 
 function MulitpleNightingaleChartCsvParser(
@@ -242,7 +281,7 @@ function MulitpleNightingaleChartCsvParser(
 // === CHART CREATIONS === //
 
 // SingleNightingaleChart - Create a nightingale chart that takes a single column as data input //
-function SingleNightingaleChart(id, title, subtitle, data) {
+function SingleNightingaleChart(id, title, subtitle, legendaOrder, data) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
       width: "100%",
@@ -279,7 +318,7 @@ function SingleNightingaleChart(id, title, subtitle, data) {
         left: "center",
       },
       legend: {
-        data: ["2022", "2020", "2021"],
+        data: legendaOrder,
         top: "60px",
         orient: "vertical",
       },

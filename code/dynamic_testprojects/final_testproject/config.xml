@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dashboard>
+<dashboard id="wonen">
     <screen>
         <row>
             <section width="1/1">
@@ -32,6 +32,14 @@
         <row>
             <section width="1/1">
                 <chart type="mntgchart" title="Antwoorden over de jaren" subtitle="Leefomgeving" timeColumn="JAAR bevraging" targetColumn="M1_Raad je het aan om in jouw straat te komen wonen?">
+                </chart>
+            </section>
+        </row>
+    </screen>
+    <screen>
+        <row>
+            <section width="1/1">
+                <chart type="mntgchart" title="Antwoorden over de jaren" subtitle="Leefomgeving" timeColumn="M1_Raad je het aan om in jouw straat te komen wonen?" targetColumn="JAAR bevraging">
                 </chart>
             </section>
         </row>
