@@ -8,14 +8,18 @@
     <link rel="stylesheet" type="text/css" href="./styling.css" />
   </head>
   <body>
-    <label for="xmlInput">1. ADD CONFIG.XML FILE - STRUCTURE</label>
-    <input
-      type="file"
-      id="xmlInput"
-      accept=".xml"
-      onchange="handleXMLFile(event)"
-    />
-    <label for="fi">2. ADD CSV FILE - DATA</label>
+    <div class="upload">
+      <div class="uploadrow">
+        <label for="xmlInput" class="margin">1. ADD CONFIG.XML FILE - STRUCTURE</label>
+        <input
+          type="file"
+          id="xmlInput"
+          accept=".xml"
+          onchange="handleXMLFile(event)"
+        />
+      </div>
+      <div id="uploadcsv"><label for="fi" class="margin">2. ADD CSV FILE - DATA</label></div>
+    </div>
     <script src="./builder2.js"></script>
   </body>
 </html>

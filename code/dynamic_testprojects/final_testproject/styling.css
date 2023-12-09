@@ -1,7 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   display: flex;
   flex-direction: column;
+  font-family: "Montserrat", sans-serif;
+}
+
+.upload {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /*layout for screen tag*/
@@ -10,7 +27,7 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  padding: 5px;
 }
 
 /*layout for row tag*/
@@ -27,6 +44,7 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding: 5px;
 }
 
 .section-75 {
@@ -34,6 +52,7 @@ body {
   width: 75%;
   display: flex;
   flex-direction: column;
+  padding: 5px;
 }
 
 .section-66 {
@@ -41,6 +60,7 @@ body {
   width: 66.6666%;
   display: flex;
   flex-direction: column;
+  padding: 5px;
 }
 
 .section-50 {
@@ -48,6 +68,7 @@ body {
   width: 50%;
   display: flex;
   flex-direction: column;
+  padding: 5px;
 }
 
 .section-33 {
@@ -55,6 +76,7 @@ body {
   width: 33.3333%;
   display: flex;
   flex-direction: column;
+  padding: 5px;
 }
 
 .section-25 {
@@ -62,6 +84,7 @@ body {
   width: 25%;
   display: flex;
   flex-direction: column;
+  padding: 5px;
 }
 
 /*layout for graph tag*/
@@ -72,4 +95,32 @@ body {
   flex-direction: column;
 }
 
+.title {
+  height: 50px;
+  width: 100%;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: larger;
+}
 
+.margin {
+  margin-right: 10px;
+}
+
+.rowTotal {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.rowWrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}

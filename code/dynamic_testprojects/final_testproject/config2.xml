@@ -1,13 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dashboard id="wonen">
-    <screen>
-        <row>
-            <section width="1/1">
-                <chart type="sntgchart" title="Aantal deelnemers per jaar" subtitle="Op basis van jaarlijkse bevragingen" targetColumn="JAAR bevraging">
-                    <!-- <legenda orientation="horizontal"></legenda> -->
-                    <item displayIndex="1" legendaIndex="1" changedName="Het jaar 2020">2020</item>
-                    <item displayIndex="2" legendaIndex="2" changedName="Het jaar 2021">2021</item>
-                    <item displayIndex="3" legendaIndex="3" changedName="Het jaar 2022">2022</item>
+<dashboard>
+    <screen color="red" title="Testing the screen title" title-txt-color="black"
+        title-bg-color="white">
+        <row color="gray" title="Testing the row title" title-txt-color="white" title-bg-color="black">
+            <section width="1/2" color="green" title="Testing the first section title" title-txt-color="black" title-bg-color="white">
+                <chart type="sntgchart" title="Aantal deelnemers per jaar" subtitle="Op basis van jaarlijkse bevragingen" targetColumn="JAAR bevraging" legendaView="horizontal">
+                    <item displayIndex="1" legendaIndex="3" changedName="1997">2020</item>
+                    <item displayIndex="2" legendaIndex="2" changedName="1998">2021</item>
+                    <item displayIndex="3" legendaIndex="1">2022</item>
+                </chart>
+            </section>
+            <section width="1/2" color="purple" title="testing the second section title" title-txt-color="black" title-bg-color="white">
+                <chart type="sntgchart" title="Aantal deelnemers per jaar" subtitle="Op basis van jaarlijkse bevragingen" targetColumn="JAAR bevraging" legendaView="horizontal">
+                    <item displayIndex="1" legendaIndex="3">2020</item>
+                    <item displayIndex="2" legendaIndex="2">2021</item>
+                    <item displayIndex="3" legendaIndex="1">2022</item>
+                </chart>
+            </section>
+        </row>
+    </screen>
+    <screen color="red" title="Testing the screen title" title-txt-color="black"
+        title-bg-color="white">
+        <row color="gray" title="Testing the row title" title-txt-color="white" title-bg-color="black">
+            <section width="1/2" color="green" title="Testing the first section title" title-txt-color="black" title-bg-color="white">
+                <chart type="sntgchart" title="Aantal deelnemers per jaar" subtitle="Op basis van jaarlijkse bevragingen" targetColumn="JAAR bevraging" legendaView="horizontal">
+                    <item displayIndex="1" legendaIndex="3">2020</item>
+                    <item displayIndex="2" legendaIndex="2">2021</item>
+                    <item displayIndex="3" legendaIndex="1">2022</item>
+                </chart>
+            </section>
+            <section width="1/2" color="purple" title="testing the second section title" title-txt-color="black" title-bg-color="white">
+                <chart type="sntgchart" title="Aantal deelnemers per jaar" subtitle="Op basis van jaarlijkse bevragingen" targetColumn="JAAR bevraging" legendaView="horizontal">
+                    <item displayIndex="1" legendaIndex="3">2020</item>
+                    <item displayIndex="2" legendaIndex="2">2021</item>
+                    <item displayIndex="3" legendaIndex="1">2022</item>
+                </chart>
+            </section>
+        </row>
+    </screen>
+    <screen color="red" title="Testing the screen title" title-txt-color="black"
+        title-bg-color="white">
+        <row color="gray" title="Testing the row title" title-txt-color="white" title-bg-color="black">
+            <section width="1/2" color="green" title="Testing the first section title" title-txt-color="black" title-bg-color="white">
+                <chart type="sntgchart" title="Aantal deelnemers per jaar" subtitle="Op basis van jaarlijkse bevragingen" targetColumn="JAAR bevraging" legendaView="horizontal">
+                    <item displayIndex="1" legendaIndex="3">2020</item>
+                    <item displayIndex="2" legendaIndex="2">2021</item>
+                    <item displayIndex="3" legendaIndex="1">2022</item>
+                </chart>
+            </section>
+            <section width="1/2" color="purple" title="testing the second section title" title-txt-color="black" title-bg-color="white">
+                <chart type="sntgchart" title="Aantal deelnemers per jaar" subtitle="Op basis van jaarlijkse bevragingen" targetColumn="JAAR bevraging" legendaView="horizontal">
+                    <item displayIndex="1" legendaIndex="3">2020</item>
+                    <item displayIndex="2" legendaIndex="2">2021</item>
+                    <item displayIndex="3" legendaIndex="1">2022</item>
                 </chart>
             </section>
         </row>

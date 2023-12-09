@@ -8,7 +8,8 @@ async function constructPage() {
       fileInput.addEventListener("change", resolve);
     });
 
-    document.body.appendChild(fileInput);
+    const csvupload = document.getElementById("uploadcsv");
+    csvupload.appendChild(fileInput);
     await fileChangeEvent;
 
     const file = fileInput.files[0];
@@ -40,15 +41,21 @@ async function constructPage() {
           graphsAttributeList[parseInt(currentGraphId)].displayOrder;
         const currentLegendaOrder =
           graphsAttributeList[parseInt(currentGraphId)].legendaOrder;
+        const currentLegendaView =
+          graphsAttributeList[parseInt(currentGraphId)].legendaView;
+        const currentChangedNames =
+          graphsAttributeList[parseInt(currentGraphId)].changedNames;
         SingleNightingaleChart(
           currentGraphId,
           currentGraphTitle,
           currentGraphSubTitle,
           currentLegendaOrder,
+          currentLegendaView,
           SingleNightingaleChartCsvParser(
             content,
             currentGraphTargetColumn,
-            currentDisplayOrder
+            currentDisplayOrder,
+            currentChangedNames
           )
         );
       }
@@ -91,17 +98,56 @@ function displayXMLContent(xmlDoc) {
   for (var i = 0; i < screens.length; i++) {
     let screenDiv = document.createElement("div");
     screenDiv.className = "screen";
+    screenDiv.style =
+      "background-color: " + screens[i].getAttribute("color") + ";";
+
+    if (screens[i].hasAttribute("title")) {
+      let screenTitle = document.createElement("div");
+      screenTitle.className = "title";
+      screenTitle.style = `color: ${screens[i].getAttribute(
+        "title-txt-color"
+      )}; background-color: ${screens[i].getAttribute("title-bg-color")}`;
+      screenTitle.textContent = screens[i].getAttribute("title");
+      screenDiv.appendChild(screenTitle);
+    }
 
     let rows = screens[i].getElementsByTagName("row");
     for (var j = 0; j < rows.length; j++) {
+      let rowWrapper = document.createElement("div");
+      rowWrapper.style =
+        "background-color: " + rows[j].getAttribute("color") + ";";
+      rowWrapper.className = "rowWrapper";
+
       let rowDiv = document.createElement("div");
       rowDiv.className = "row";
+
+      if (rows[j].hasAttribute("title")) {
+        let rowTitle = document.createElement("div");
+        rowTitle.className = "title";
+        rowTitle.style = `color: ${rows[j].getAttribute(
+          "title-txt-color"
+        )}; background-color: ${rows[j].getAttribute("title-bg-color")}`;
+        rowTitle.textContent = rows[j].getAttribute("title");
+        rowWrapper.appendChild(rowTitle);
+      }
 
       let sections = rows[j].getElementsByTagName("section");
       for (var k = 0; k < sections.length; k++) {
         var sectionDiv = document.createElement("div");
         sectionDiv.className =
           "section-" + divisionToPercentage(sections[k].getAttribute("width"));
+        sectionDiv.style =
+          "background-color: " + sections[k].getAttribute("color") + ";";
+
+        if (sections[k].hasAttribute("title")) {
+          let sectionTitle = document.createElement("div");
+          sectionTitle.className = "title";
+          sectionTitle.style = `color: ${sections[k].getAttribute(
+            "title-txt-color"
+          )}; background-color: ${sections[k].getAttribute("title-bg-color")}`;
+          sectionTitle.textContent = sections[k].getAttribute("title");
+          sectionDiv.appendChild(sectionTitle);
+        }
 
         let graphs = sections[k].getElementsByTagName("chart");
         for (var l = 0; l < graphs.length; l++) {
@@ -111,18 +157,33 @@ function displayXMLContent(xmlDoc) {
           graphDiv.classList.add("graph");
           let legendaOrder = [];
           let displayOrder = [];
+          let changedNames = [];
           let items = graphs[l].getElementsByTagName("item");
           for (var m = 0; m < items.length; m++) {
-            insertIntegerInOrder(
-              displayOrder,
-              items[m].getAttribute("displayIndex"),
-              items[m].textContent
-            );
-            insertIntegerInOrder(
-              legendaOrder,
-              items[m].getAttribute("legendaIndex"),
-              items[m].textContent
-            );
+            displayOrder.push({
+              index: items[m].getAttribute("displayIndex"),
+              data: changeName(
+                items[m].hasAttribute("changedName"),
+                items[m].textContent,
+                items[m].getAttribute("changedName")
+              ),
+            });
+            legendaOrder.push({
+              index: items[m].getAttribute("legendaIndex"),
+              data: changeName(
+                items[m].hasAttribute("changedName"),
+                items[m].textContent,
+                items[m].getAttribute("changedName")
+              ),
+            });
+            changedNames.push({
+              name: items[m].textContent,
+              changedName: changeName(
+                items[m].hasAttribute("changedName"),
+                items[m].textContent,
+                items[m].getAttribute("changedName")
+              ),
+            });
           }
 
           if (graphs[l].getAttribute("type") == "sntgchart") {
@@ -131,36 +192,46 @@ function displayXMLContent(xmlDoc) {
               title: graphs[l].getAttribute("title"),
               subtitle: graphs[l].getAttribute("subtitle"),
               targetColumn: graphs[l].getAttribute("targetColumn"),
-              displayOrder: displayOrder,
-              legendaOrder: legendaOrder,
+              displayOrder: manipulateArray(displayOrder),
+              legendaOrder: manipulateArray(legendaOrder),
+              legendaView: graphs[l].getAttribute("legendaView"),
+              changedNames: changedNames,
             });
           }
-          console.log(graphsAttributeList);
           sectionDiv.appendChild(graphDiv);
         }
 
         rowDiv.appendChild(sectionDiv);
       }
-
-      screenDiv.appendChild(rowDiv);
+      rowWrapper.appendChild(rowDiv);
+      screenDiv.appendChild(rowWrapper);
     }
 
     document.body.appendChild(screenDiv);
   }
+  console.log(graphsAttributeList);
   console.log("XML Parsing Done!");
 }
 
-function insertIntegerInOrder(arr, newInt, data) {
-  if (arr.length === 0) {
-    arr.push(data);
-  } else {
-    let index = 0;
-    while (index < arr.length && newInt > arr[index]) {
-      index++;
-    }
-    arr.splice(index, 0, data);
+function manipulateArray(array) {
+  array.sort((a, b) => a.index - b.index);
+  return array.map((item) => item.data);
+}
+
+function changeName(hasAttribute, name, changedName) {
+  if (hasAttribute) {
+    return changedName;
   }
-  return arr;
+  return name;
+}
+
+function findChangedName(value, array) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].name === value) {
+      return array[i].changedName;
+    }
+  }
+  return value;
 }
 
 // XML LOADING
@@ -199,7 +270,12 @@ async function handleXMLFile(event) {
 
 // === CSV PARSERS === //
 
-function SingleNightingaleChartCsvParser(content, targetColumn, displayOrder) {
+function SingleNightingaleChartCsvParser(
+  content,
+  targetColumn,
+  displayOrder,
+  changedNames
+) {
   const rows = content.split("\n");
   const headers = rows[0].split(";");
 
@@ -220,7 +296,7 @@ function SingleNightingaleChartCsvParser(content, targetColumn, displayOrder) {
       (value) => value === element
     ).length;
     return {
-      name: element,
+      name: findChangedName(element, changedNames),
       value: occurrences,
     };
   });
@@ -281,7 +357,14 @@ function MulitpleNightingaleChartCsvParser(
 // === CHART CREATIONS === //
 
 // SingleNightingaleChart - Create a nightingale chart that takes a single column as data input //
-function SingleNightingaleChart(id, title, subtitle, legendaOrder, data) {
+function SingleNightingaleChart(
+  id,
+  title,
+  subtitle,
+  legendaOrder,
+  legendaView,
+  data
+) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
       width: "100%",
@@ -320,7 +403,7 @@ function SingleNightingaleChart(id, title, subtitle, legendaOrder, data) {
       legend: {
         data: legendaOrder,
         top: "60px",
-        orient: "vertical",
+        orient: legendaView,
       },
       tooltip: {
         trigger: "item",
