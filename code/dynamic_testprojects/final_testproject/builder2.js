@@ -68,10 +68,13 @@ async function constructPage() {
           graphsAttributeList[parseInt(currentGraphId)].timeColumn;
         const currentGraphTargetColumn =
           graphsAttributeList[parseInt(currentGraphId)].targetColumn;
+        const currentLegendaView =
+          graphsAttributeList[parseInt(currentGraphId)].legendaView;
         MultipleNightingaleChart(
           currentGraphId,
           currentGraphTitle,
           currentGraphSubTitle,
+          currentLegendaView,
           MulitpleNightingaleChartCsvParser(
             content,
             currentGraphTimeColumn,
@@ -196,6 +199,16 @@ function displayXMLContent(xmlDoc) {
               legendaOrder: manipulateArray(legendaOrder),
               legendaView: graphs[l].getAttribute("legendaView"),
               changedNames: changedNames,
+            });
+          }
+          if (graphs[l].getAttribute("type") == "mntgchart") {
+            graphsAttributeList.push({
+              type: graphs[l].getAttribute("type"),
+              title: graphs[l].getAttribute("title"),
+              subtitle: graphs[l].getAttribute("subtitle"),
+              timeColumn: graphs[l].getAttribute("timeColumn"),
+              targetColumn: graphs[l].getAttribute("targetColumn"),
+              legendaView: graphs[l].getAttribute("legendaView"),
             });
           }
           sectionDiv.appendChild(graphDiv);
@@ -446,7 +459,7 @@ function SingleNightingaleChart(
 }
 
 // MultipleNightingaleChart - Create a series of nightingale chart that take a time-based column and a target column //
-function MultipleNightingaleChart(id, title, subtitle, data) {
+function MultipleNightingaleChart(id, title, subtitle, legendaView, data) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
       width: "100%",
@@ -506,7 +519,7 @@ function MultipleNightingaleChart(id, title, subtitle, data) {
       },
       legend: {
         top: "60px",
-        orient: "vertical",
+        orient: legendaView,
       },
       tooltip: {
         trigger: "item",
