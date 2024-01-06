@@ -34,28 +34,87 @@ async function constructPage() {
       const legendaView = graphsAttributeList[parseInt(graphId)].legendaView;
       const graphTargetColumn =
         graphsAttributeList[parseInt(graphId)].targetColumn;
+      const graphTimeColumn = graphsAttributeList[parseInt(graphId)].timeColumn;
 
       switch (graphType) {
         case "vmbar":
-          VerticalMultipleBarChart(graphId);
+          VerticalMultipleBarChart(
+            graphId,
+            graphTitle,
+            graphSubTitle,
+            showLegenda,
+            legendaView,
+            VerticalMultipleBarChartCsvParser(
+              content,
+              graphTimeColumn,
+              graphTargetColumn
+            )
+          );
           break;
         case "hmbar":
-          HorizontalMultipleBarChart(graphId);
+          HorizontalMultipleBarChart(
+            graphId,
+            graphTitle,
+            graphSubTitle,
+            showLegenda,
+            legendaView,
+            HorizontalMultipleBarChartCsvParser(
+              content,
+              graphTimeColumn,
+              graphTargetColumn
+            )
+          );
           break;
         case "stackedbar":
-          StackedBarChart(graphId);
+          StackedBarChart(
+            graphId,
+            graphTitle,
+            graphSubTitle,
+            showLegenda,
+            legendaView,
+            StackedBarChartCsvParser(
+              content,
+              graphTimeColumn,
+              graphTargetColumn
+            )
+          );
           break;
         case "stackedline":
-          StackedLineChart(graphId);
+          StackedLineChart(
+            graphId,
+            graphTitle,
+            graphSubTitle,
+            showLegenda,
+            legendaView,
+            StackedLineChartCsvParser(
+              content,
+              graphTimeColumn,
+              graphTargetColumn
+            )
+          );
           break;
         case "histo":
           HistogramChart(graphId);
           break;
         case "donut":
-          DonutChart(graphId);
+          DonutChart(
+            graphId,
+            graphTitle,
+            graphSubTitle,
+            showLegenda,
+            legendaView,
+            DonutChartCsvParser(content, graphTargetColumn)
+          );
           break;
         case "radar":
-          RadarChart(graphId);
+          RadarChart(
+            graphId,
+            graphTitle,
+            graphSubTitle,
+            showLegenda,
+            legendaView,
+            RadarChartCsvParser(content, graphTimeColumn, graphTargetColumn)
+          );
           break;
         case "sntgale":
           const changedNames =
@@ -75,12 +134,11 @@ async function constructPage() {
           );
           break;
         case "mntgale":
-          const graphTimeColumn =
-            graphsAttributeList[parseInt(graphId)].timeColumn;
           MultipleNightingaleChart(
             graphId,
             graphTitle,
             graphSubTitle,
+            showLegenda,
             legendaView,
             MulitpleNightingaleChartCsvParser(
               content,
@@ -204,6 +262,7 @@ function displayXMLContent(xmlDoc) {
                 type: graphs[l].getAttribute("type"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
+                timeColumn: graphs[l].getAttribute("timeColumn"),
                 targetColumn: graphs[l].getAttribute("targetColumn"),
                 showLegenda: graphs[l].getAttribute("showLegenda"),
                 legendaView: graphs[l].getAttribute("legendaView"),
@@ -216,6 +275,7 @@ function displayXMLContent(xmlDoc) {
                 type: graphs[l].getAttribute("type"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
+                timeColumn: graphs[l].getAttribute("timeColumn"),
                 targetColumn: graphs[l].getAttribute("targetColumn"),
                 showLegenda: graphs[l].getAttribute("showLegenda"),
                 legendaView: graphs[l].getAttribute("legendaView"),
@@ -228,6 +288,7 @@ function displayXMLContent(xmlDoc) {
                 type: graphs[l].getAttribute("type"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
+                timeColumn: graphs[l].getAttribute("timeColumn"),
                 targetColumn: graphs[l].getAttribute("targetColumn"),
                 showLegenda: graphs[l].getAttribute("showLegenda"),
                 legendaView: graphs[l].getAttribute("legendaView"),
@@ -240,6 +301,7 @@ function displayXMLContent(xmlDoc) {
                 type: graphs[l].getAttribute("type"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
+                timeColumn: graphs[l].getAttribute("timeColumn"),
                 targetColumn: graphs[l].getAttribute("targetColumn"),
                 showLegenda: graphs[l].getAttribute("showLegenda"),
                 legendaView: graphs[l].getAttribute("legendaView"),
@@ -276,6 +338,7 @@ function displayXMLContent(xmlDoc) {
                 type: graphs[l].getAttribute("type"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
+                timeColumn: graphs[l].getAttribute("timeColumn"),
                 targetColumn: graphs[l].getAttribute("targetColumn"),
                 showLegenda: graphs[l].getAttribute("showLegenda"),
                 legendaView: graphs[l].getAttribute("legendaView"),
@@ -457,29 +520,88 @@ async function handleXMLFile(event) {
 // === GRAPHS & PARSERS === //
 
 // --- Vertical Multiple Bar Chart --- //
-function VerticalMultipleBarChart(id) {
+function VerticalMultipleBarChartCsvParser(
+  content,
+  timeColumnName,
+  targetColumnName
+) {
+  const rows = content.split("\n");
+  const headers = rows[0].split(";").map((header) => header.trim());
+
+  const timeColumn = headers.indexOf(timeColumnName);
+  const targetColumn = headers.indexOf(targetColumnName);
+
+  const data = {};
+
+  rows.slice(1).forEach((row) => {
+    const columns = row.split(";");
+    const time = columns[timeColumn];
+    const target = columns[targetColumn];
+
+    if (!data[target]) {
+      data[target] = {};
+    }
+
+    if (!data[target][time]) {
+      data[target][time] = 1;
+    } else {
+      data[target][time]++;
+    }
+  });
+
+  const times = Array.from(
+    new Set(rows.slice(1).map((row) => row.split(";")[timeColumn]))
+  );
+
+  const uniqueTargets = Array.from(
+    new Set(rows.slice(1).map((row) => row.split(";")[targetColumn]))
+  );
+  const output = [["", ...times]]; // Initialize output array without the 'time' header
+
+  uniqueTargets.forEach((target) => {
+    const targetArr = [target];
+
+    times.forEach((time) => {
+      targetArr.push(data[target][time] || 0);
+    });
+
+    output.push(targetArr);
+  });
+
+  return output;
+}
+
+function VerticalMultipleBarChart(
+  id,
+  title,
+  subtitle,
+  showLegenda,
+  legendaView,
+  data
+) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "100%",
-      height: "100%",
+      width: "80%",
+      height: "80%",
     });
 
     option = {
-      legend: {},
+      title: {
+        text: title,
+        subtext: subtitle,
+        left: "center",
+      },
+      legend: {
+        show: showLegenda,
+        top: "60px",
+        orient: legendaView,
+      },
       tooltip: {},
       dataset: {
-        source: [
-          ["product", "2015", "2016", "2017"],
-          ["Matcha Latte", 43.3, 85.8, 93.7],
-          ["Milk Tea", 83.1, 73.4, 55.1],
-          ["Cheese Cocoa", 86.4, 65.2, 82.5],
-          ["Walnut Brownie", 72.4, 53.9, 39.1],
-        ],
+        source: data,
       },
       xAxis: { type: "category" },
       yAxis: {},
-      // Declare several bar series, each will be mapped
-      // to a column of dataset.source by default.
       series: [{ type: "bar" }, { type: "bar" }, { type: "bar" }],
     };
 
@@ -488,17 +610,86 @@ function VerticalMultipleBarChart(id) {
     resolve();
   });
 }
+
 // --- Horizontal Multiple Bar Chart --- //
-function HorizontalMultipleBarChart(id) {
+function HorizontalMultipleBarChartCsvParser(
+  content,
+  timeColumnName,
+  targetColumnName
+) {
+  const rows = content.split("\n");
+  const headers = rows[0].split(";").map((header) => header.trim());
+  const data = {};
+
+  const timeColumn = headers.indexOf(timeColumnName);
+  const targetColumn = headers.indexOf(targetColumnName);
+
+  rows.slice(1).forEach((row) => {
+    const columns = row.split(";");
+    const time = columns[timeColumn];
+    const target = columns[targetColumn];
+
+    if (!data[time]) {
+      data[time] = {};
+    }
+
+    if (!data[time][target]) {
+      data[time][target] = 1;
+    } else {
+      data[time][target]++;
+    }
+  });
+
+  const uniqueTargets = Array.from(
+    new Set(rows.slice(1).map((row) => row.split(";")[targetColumn]))
+  );
+  const result = [uniqueTargets];
+
+  const seriesData = [];
+  Object.keys(data).forEach((time) => {
+    const timeData = [];
+    uniqueTargets.forEach((target) => {
+      timeData.push(data[time][target] || 0);
+    });
+
+    const series = {
+      name: time,
+      type: "bar",
+      data: timeData,
+    };
+
+    seriesData.push(series);
+  });
+
+  result.push(seriesData);
+
+  return result;
+}
+
+function HorizontalMultipleBarChart(
+  id,
+  title,
+  subtitle,
+  showLegenda,
+  legendaView,
+  data
+) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "100%",
-      height: "100%",
+      width: "80%",
+      height: "80%",
     });
 
     option = {
       title: {
-        text: "World Population",
+        text: title,
+        subtext: subtitle,
+        left: "center",
+      },
+      legend: {
+        show: showLegenda,
+        top: "60px",
+        orient: legendaView,
       },
       tooltip: {
         trigger: "axis",
@@ -506,7 +697,6 @@ function HorizontalMultipleBarChart(id) {
           type: "shadow",
         },
       },
-      legend: {},
       grid: {
         left: "3%",
         right: "4%",
@@ -519,20 +709,9 @@ function HorizontalMultipleBarChart(id) {
       },
       yAxis: {
         type: "category",
-        data: ["Brazil", "Indonesia", "USA", "India", "China", "World"],
+        data: data[0],
       },
-      series: [
-        {
-          name: "2011",
-          type: "bar",
-          data: [18203, 23489, 29034, 104970, 131744, 630230],
-        },
-        {
-          name: "2012",
-          type: "bar",
-          data: [19325, 23438, 31000, 121594, 134141, 681807],
-        },
-      ],
+      series: data[1],
     };
 
     chart.setOption(option);
@@ -540,46 +719,66 @@ function HorizontalMultipleBarChart(id) {
     resolve();
   });
 }
+
 // --- Stacked Bar Chart --- //
-function StackedBarChart(id) {
-  return new Promise((resolve) => {
-    let chart = echarts.init(document.getElementById(id), {
-      width: "100%",
-      height: "100%",
+function StackedBarChartCsvParser(content, timeColumnName, targetColumnName) {
+  const rows = content.split("\n");
+  const headers = rows[0].split(";").map((header) => header.trim());
+  const data = {};
+
+  const timeColumn = headers.indexOf(timeColumnName);
+  const targetColumn = headers.indexOf(targetColumnName);
+
+  rows.slice(1).forEach((row) => {
+    const columns = row.split(";");
+    const time = columns[timeColumn];
+    const target = columns[targetColumn];
+
+    if (!data[time]) {
+      data[time] = {};
+    }
+
+    if (!data[time][target]) {
+      data[time][target] = 1;
+    } else {
+      data[time][target]++;
+    }
+  });
+
+  const uniqueTargets = Array.from(
+    new Set(rows.slice(1).map((row) => row.split(";")[targetColumn]))
+  );
+  const result = [uniqueTargets];
+
+  const seriesData = [];
+  Object.keys(data).forEach((time) => {
+    const timeData = [];
+    uniqueTargets.forEach((target) => {
+      timeData.push(data[time][target] || 0);
     });
 
-    var series = [
-      {
-        data: [120, 200, 150, 80, 70, 110, 130],
-        type: "bar",
-        stack: "a",
-        name: "a",
-      },
-      {
-        data: [10, 46, 64, "-", 0, "-", 0],
-        type: "bar",
-        stack: "a",
-        name: "b",
-      },
-      {
-        data: [30, "-", 0, 20, 10, "-", 0],
-        type: "bar",
-        stack: "a",
-        name: "c",
-      },
-      {
-        data: [30, "-", 0, 20, 10, "-", 0],
-        type: "bar",
-        stack: "a",
-        name: "d",
-      },
-      {
-        data: [10, 20, 150, 0, "-", 50, 10],
-        type: "bar",
-        stack: "a",
-        name: "e",
-      },
-    ];
+    const series = {
+      name: time,
+      type: "bar",
+      data: timeData,
+      stack: "a",
+    };
+
+    seriesData.push(series);
+  });
+
+  result.push(seriesData);
+
+  return result;
+}
+function StackedBarChart(id, title, subtitle, showLegenda, legendaView, data) {
+  return new Promise((resolve) => {
+    let chart = echarts.init(document.getElementById(id), {
+      width: "80%",
+      height: "80%",
+    });
+
+    var series = data[1];
     const stackInfo = {};
     for (let i = 0; i < series[0].data.length; ++i) {
       for (let j = 0; j < series.length; ++j) {
@@ -617,9 +816,19 @@ function StackedBarChart(id) {
       }
     }
     option = {
+      title: {
+        text: title,
+        subtext: subtitle,
+        left: "center",
+      },
+      legend: {
+        show: showLegenda,
+        top: "60px",
+        orient: legendaView,
+      },
       xAxis: {
         type: "category",
-        data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        data: data[0],
       },
       yAxis: {
         type: "value",
@@ -634,23 +843,80 @@ function StackedBarChart(id) {
 }
 
 // --- Stacked Line Chart --- //
-function StackedLineChart(id) {
+function StackedLineChartCsvParser(content, timeColumnName, targetColumnName) {
+  const rows = content.split("\n");
+  const headers = rows[0].split(";").map((header) => header.trim());
+  const data = {};
+
+  const timeColumn = headers.indexOf(timeColumnName);
+  const targetColumn = headers.indexOf(targetColumnName);
+
+  rows.slice(1).forEach((row) => {
+    const columns = row.split(";");
+    const time = columns[timeColumn];
+    const target = columns[targetColumn];
+
+    if (!data[time]) {
+      data[time] = {};
+    }
+
+    if (!data[time][target]) {
+      data[time][target] = 1;
+    } else {
+      data[time][target]++;
+    }
+  });
+
+  const uniqueTargets = Array.from(
+    new Set(rows.slice(1).map((row) => row.split(";")[targetColumn]))
+  );
+  const result = [uniqueTargets];
+
+  const seriesData = [];
+  Object.keys(data).forEach((time) => {
+    const timeData = [];
+    uniqueTargets.forEach((target) => {
+      timeData.push(data[time][target] || 0);
+    });
+
+    const series = {
+      name: time,
+      type: "line",
+      data: timeData,
+      // stack: "a",
+    };
+
+    seriesData.push(series);
+  });
+
+  result.push(seriesData);
+
+  return result;
+}
+function StackedLineChart(id, title, subtitle, showLegenda, legendaView, data) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "100%",
-      height: "100%",
+      width: "80%",
+      height: "80%",
     });
 
     option = {
       title: {
-        text: "Stacked Line",
+        text: title,
+        subtext: subtitle,
+        left: "center",
+      },
+      legend: {
+        show: showLegenda,
+        top: "60px",
+        orient: legendaView,
       },
       tooltip: {
         trigger: "axis",
       },
-      legend: {
-        data: ["Email", "Union Ads", "Video Ads", "Direct", "Search Engine"],
-      },
+      // legend: {
+      //   data: ["Email", "Union Ads", "Video Ads", "Direct", "Search Engine"],
+      // },
       grid: {
         left: "3%",
         right: "4%",
@@ -665,43 +931,12 @@ function StackedLineChart(id) {
       xAxis: {
         type: "category",
         boundaryGap: false,
-        data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        data: data[0],
       },
       yAxis: {
         type: "value",
       },
-      series: [
-        {
-          name: "Email",
-          type: "line",
-          stack: "Total",
-          data: [120, 132, 101, 134, 90, 230, 210],
-        },
-        {
-          name: "Union Ads",
-          type: "line",
-          stack: "Total",
-          data: [220, 182, 191, 234, 290, 330, 310],
-        },
-        {
-          name: "Video Ads",
-          type: "line",
-          stack: "Total",
-          data: [150, 232, 201, 154, 190, 330, 410],
-        },
-        {
-          name: "Direct",
-          type: "line",
-          stack: "Total",
-          data: [320, 332, 301, 334, 390, 330, 320],
-        },
-        {
-          name: "Search Engine",
-          type: "line",
-          stack: "Total",
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
-        },
-      ],
+      series: data[1],
     };
 
     chart.setOption(option);
@@ -760,7 +995,33 @@ function HistogramChart(id) {
   });
 }
 // --- Donut Chart --- //
-function DonutChart(id) {
+function DonutChartCsvParser(content, targetColumnName) {
+  const rows = content.split("\n");
+  const headers = rows[0].split(";").map((header) => header.trim());
+  const targetColumn = headers.indexOf(targetColumnName);
+
+  const data = {};
+
+  rows.slice(1).forEach((row) => {
+    const columns = row.split(";");
+    const target = columns[targetColumn];
+
+    if (!data[target]) {
+      data[target] = 1;
+    } else {
+      data[target]++;
+    }
+  });
+
+  const result = Object.keys(data).map((target) => ({
+    value: data[target],
+    name: target,
+  }));
+
+  return result;
+}
+
+function DonutChart(id, title, subtitle, showLegenda, legendaView, data) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
       width: "100%",
@@ -768,45 +1029,32 @@ function DonutChart(id) {
     });
 
     option = {
+      title: {
+        text: title,
+        subtext: subtitle,
+        left: "center",
+      },
+      legend: {
+        show: showLegenda,
+        top: "60px",
+        orient: legendaView,
+      },
       tooltip: {
         trigger: "item",
       },
-      legend: {
-        top: "5%",
-        left: "center",
-      },
       series: [
         {
-          name: "Access From",
           type: "pie",
           radius: ["40%", "70%"],
           avoidLabelOverlap: false,
-          itemStyle: {
-            borderRadius: 10,
-            borderColor: "#fff",
-            borderWidth: 2,
-          },
           label: {
             show: false,
             position: "center",
           },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: 40,
-              fontWeight: "bold",
-            },
-          },
           labelLine: {
             show: false,
           },
-          data: [
-            { value: 1048, name: "Search Engine" },
-            { value: 735, name: "Direct" },
-            { value: 580, name: "Email" },
-            { value: 484, name: "Union Ads" },
-            { value: 300, name: "Video Ads" },
-          ],
+          data: data,
         },
       ],
     };
@@ -817,7 +1065,46 @@ function DonutChart(id) {
   });
 }
 // --- Radar Chart --- //
-function RadarChart(id) {
+function RadarChartCsvParser(content, timeColumnName, targetColumnName) {
+  const rows = content.split("\n");
+  const headers = rows[0].split(";").map((header) => header.trim());
+  const timeColumn = headers.indexOf(timeColumnName);
+  const targetColumn = headers.indexOf(targetColumnName);
+
+  const data = {};
+
+  rows.slice(1).forEach((row) => {
+    const columns = row.split(";");
+    const time = columns[timeColumn];
+    const target = columns[targetColumn];
+
+    if (!data[target]) {
+      data[target] = {};
+    }
+
+    if (!data[target].value) {
+      data[target].value = [];
+    }
+
+    data[target].value.push(time);
+  });
+
+  const times = Array.from(
+    new Set(rows.slice(1).map((row) => row.split(";")[timeColumn]))
+  );
+  const uniqueTargets = Object.keys(data);
+  const result = [times.map((time) => ({ name: time })), []];
+  uniqueTargets.forEach((target) => {
+    const valueArr = times.map(
+      (time) => data[target].value.filter((val) => val === time).length
+    );
+    result[1].push({ value: valueArr, name: target });
+  });
+
+  return result;
+}
+
+function RadarChart(id, title, subtitle, showLegenda, legendaView, data) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
       width: "100%",
@@ -826,36 +1113,24 @@ function RadarChart(id) {
 
     option = {
       title: {
-        text: "Basic Radar Chart",
+        text: title,
+        subtext: subtitle,
+        left: "center",
       },
       legend: {
-        data: ["Allocated Budget", "Actual Spending"],
+        show: showLegenda,
+        top: "60px",
+        orient: legendaView,
       },
       radar: {
         // shape: 'circle',
-        indicator: [
-          { name: "Sales", max: 6500 },
-          { name: "Administration", max: 16000 },
-          { name: "Information Technology", max: 30000 },
-          { name: "Customer Support", max: 38000 },
-          { name: "Development", max: 52000 },
-          { name: "Marketing", max: 25000 },
-        ],
+        indicator: data[0],
       },
       series: [
         {
           name: "Budget vs spending",
           type: "radar",
-          data: [
-            {
-              value: [4200, 3000, 20000, 35000, 50000, 18000],
-              name: "Allocated Budget",
-            },
-            {
-              value: [5000, 14000, 28000, 26000, 42000, 21000],
-              name: "Actual Spending",
-            },
-          ],
+          data: data[1],
         },
       ],
     };

@@ -4,7 +4,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="vmbar">
+                <chart type="vmbar" title="Vertical Multiple Bar Chart" subtitle="test" timeColumn="10. Hoe lang wil je in de straat wonen?_Clustered" targetColumn="JAAR bevraging" showLegenda="true" legendaView="vertical">
                 </chart>
             </section>
         </row>
@@ -13,7 +13,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="hmbar">
+                <chart type="hmbar" title="Horizontal Multiple Bar Chart" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="vertical">
                 </chart>
             </section>
         </row>
@@ -22,7 +22,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="stackedbar">
+                <chart type="stackedbar" title="Stacked Bar Chart" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="vertical">
                 </chart>
             </section>
         </row>
@@ -31,7 +31,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="stackedline">
+                <chart type="stackedline" title="Stacked Line Chart" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="vertical">
                 </chart>
             </section>
         </row>
@@ -49,7 +49,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="donut">
+                <chart type="donut" title="Donut Chart" subtitle="test" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="vertical">
                 </chart>
             </section>
         </row>
@@ -58,7 +58,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="radar">
+                <chart type="radar" title="Radar Chart" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="vertical">
                 </chart>
             </section>
         </row>
