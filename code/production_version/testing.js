@@ -1,52 +1,57 @@
-function ProcessTimeAndTargetCSV(csvData) {
+function extractColumns(csvData, targetColumnsString) {
   const rows = csvData.split("\n");
-  const headers = rows[0].split(";").map((header) => header.trim());
-  const timeColumn = headers.indexOf("time");
-  const targetColumn = headers.indexOf("target");
+  const headers = rows[0].split(";");
 
-  const data = {};
+  const targetColumnsArray = targetColumnsString.split(",");
+  const extractedColumns = [];
 
-  rows.slice(1).forEach((row) => {
-    const columns = row.split(";");
-    const time = columns[timeColumn];
-    const target = columns[targetColumn];
+  const valuesArray = [];
+  let columnsArray = [];
 
-    if (!data[target]) {
-      data[target] = {};
+  targetColumnsArray.forEach((targetColumn) => {
+    if (headers.includes(targetColumn)) {
+      const columnIndex = headers.indexOf(targetColumn);
+      const columnValues = [];
+
+      for (let i = 1; i < rows.length; i++) {
+        const rowValues = rows[i].split(";");
+        const value = rowValues[columnIndex].replace(",", "."); // Replace comma with dot
+        const multipliedValue = parseFloat(value) * 100;
+        const intValue = Math.round(multipliedValue); // Remove decimal places after multiplication
+        columnValues.push(intValue);
+      }
+
+      const uniqueValues = [...new Set(columnValues)];
+      const columnEntry = [];
+
+      uniqueValues.forEach((value) => {
+        const occurrences = columnValues.filter((val) => val === value).length;
+        const index = targetColumnsArray.indexOf(targetColumn);
+        columnEntry.push([index, value, occurrences]);
+      });
+
+      const sortedValues = columnEntry.sort((a, b) => a[1] - b[1]);
+
+      valuesArray.push(...sortedValues);
+      columnsArray.push(targetColumn);
     }
-
-    if (!data[target].value) {
-      data[target].value = [];
-    }
-
-    data[target].value.push(time);
   });
 
-  const times = Array.from(
-    new Set(rows.slice(1).map((row) => row.split(";")[timeColumn]))
-  );
-  const uniqueTargets = Object.keys(data);
-  const result = [times.map(time => ({ name: time })), []];
-  uniqueTargets.forEach((target) => {
-    const valueArr = times.map(
-      (time) => data[target].value.filter((val) => val === time).length
-    );
-    result[1].push({ value: valueArr, name: target });
-  });
+  extractedColumns.push(columnsArray);
+  extractedColumns.push(valuesArray);
 
-  return result;
+  return extractedColumns;
 }
 
-const csvData = `time;target
-2020;a
-2021;a
-2022;b
-2020;a
-2021;c
-2022;a
-2020;b
-2021;a
-2022;c`;
+// Example CSV data (replace this with your actual CSV data)
+const csvFileData = `Column1;Column2;Column3;Column4
+0.8956;0,3541;0,5987;0.4444
+0.2345;0,7555;0,1123;0.9444
+0.6677;0,0987;0,7823;0.2712
+0.5112;0,3171;0,8866;0.7277`;
 
-const result = ProcessTimeAndTargetCSV(csvData, "time", "target");
-console.log(result);
+// Example target columns
+const targetColumns = "Column2,Column3";
+
+const extractedColumns = extractColumns(csvFileData, targetColumns);
+console.log(extractedColumns);

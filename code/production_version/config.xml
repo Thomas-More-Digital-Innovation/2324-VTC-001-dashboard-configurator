@@ -75,21 +75,12 @@
             </section>
         </row>
     </screen>
-    <!-- <screen color="#EEEEEE" title="Schermtitel 1" title-txt-color="black"
+    <screen color="#EEEEEE" title="Schermtitel 1" title-txt-color="black"
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black"
     title-bg-color="white">
-                <chart type="mntgale">
-                </chart>
-            </section>
-        </row>
-    </screen> -->
-    <screen color="#EEEEEE" title="Schermtitel 1" title-txt-color="black"
-        title-bg-color="white">
-        <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
-            <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="scatter">
+                <chart type="mntgale" title="Radar Chart" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="vertical">
                 </chart>
             </section>
         </row>
@@ -98,7 +89,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="scatteraxis">
+                <chart type="scatterplot">
                 </chart>
             </section>
         </row>
@@ -107,16 +98,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="scattercluster">
-                </chart>
-            </section>
-        </row>
-    </screen>
-    <screen color="#EEEEEE" title="Schermtitel 1" title-txt-color="black"
-        title-bg-color="white">
-        <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
-            <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="heat">
+                <chart type="scatteraxis" title="Scatter Axis Chart" subtitle="test" targetColumn="L1_ScoreLeefbaarheid_ThemaInrichtingvan de straat;L1_ScoreLeefbaarheid_Sociaal;L1_ScoreLeefbaarheid_Omgevingsfactoren" showLegenda="true" legendaView="vertical">
                 </chart>
             </section>
         </row>
