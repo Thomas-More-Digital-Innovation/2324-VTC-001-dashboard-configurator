@@ -173,6 +173,9 @@ async function constructPage() {
         case "fillshape":
           FillShapeChart(graphId);
           break;
+        case "gallery":
+          createGalleryFromCSV(content, graphsAttributeList[parseInt(graphId)].titleColumn, graphsAttributeList[parseInt(graphId)].textColumn, graphsAttributeList[parseInt(graphId)].imageColumn, graphId);
+          break;
         default:
           break;
       }
@@ -185,11 +188,16 @@ async function constructPage() {
 }
 
 // === XML PARSER === //
+let dashboardColorList = [];
 let graphsAttributeList = [];
 function displayXMLContent(xmlDoc) {
   const dashboard = xmlDoc.getElementsByTagName("dashboard")[0];
+  let primaryDashboardColor = dashboard.getAttribute("primaryColor");
+  let secondaryDashboardColor = dashboard.getAttribute("secondaryColor");
+  dashboardColorList.push(primaryDashboardColor);
+  dashboardColorList.push(secondaryDashboardColor);
+  console.log(dashboardColorList);
   let graphId = 0;
-
   let screens = dashboard.getElementsByTagName("screen");
   for (var i = 0; i < screens.length; i++) {
     let screenDiv = document.createElement("div");
@@ -250,6 +258,10 @@ function displayXMLContent(xmlDoc) {
           var graphDiv = document.createElement("div");
           graphDiv.id = graphId;
           graphId += 1;
+          if (graphs[l].getAttribute("type") == "gallery") {
+            graphDiv.style =
+              "overflow-y: scroll"
+          }
           graphDiv.classList.add("graph");
           let changedNames = [];
           let items = graphs[l].getElementsByTagName("item");
@@ -263,6 +275,7 @@ function displayXMLContent(xmlDoc) {
               ),
             });
           }
+
           //rework after all graphs are properly set up
           switch (graphs[l].getAttribute("type")) {
             case "vmbar":
@@ -426,6 +439,14 @@ function displayXMLContent(xmlDoc) {
                 changedNames: changedNames,
               });
               break;
+            case "gallery":
+              graphsAttributeList.push({
+                type: graphs[l].getAttribute("type"),
+                titleColumn: graphs[l].getAttribute("titleColumn"),
+                textColumn: graphs[l].getAttribute("textColumn"),
+                imageColumn: graphs[l].getAttribute("imageColumn"),
+              });
+              break;
             default:
               break;
           }
@@ -502,6 +523,72 @@ async function handleXMLFile(event) {
 }
 
 // === GRAPHS & PARSERS === //
+
+function createGalleryFromCSV(content, titleColumnName, textColumnName, imageColumnName, targetDivId) {
+  const targetDiv = document.getElementById(targetDivId);
+  if (!targetDiv) {
+    console.error("Target div not found.");
+    return;
+  }
+
+
+  // Parse the CSV text
+  const rows = content.trim().split('\n').map(row => row.split(';'));
+
+  // Find column indices
+  const headers = rows[0].map(header => header.trim());
+  const titleColumn = headers.indexOf(titleColumnName);
+  const textColumn = headers.indexOf(textColumnName);
+  const imageColumn = headers.indexOf(imageColumnName);
+
+  let galleryItemCounter = 0;
+
+  // Create gallery divs
+  rows.slice(1).forEach(row => {
+    const title = row[titleColumn];
+    const text = row[textColumn];
+    const imageUrl = row[imageColumn];
+
+    const galleryItem = document.createElement("div");
+    if (galleryItemCounter % 2 == 0) {
+      galleryItem.style = "width: 100vw;, height: 50vh; display: flex; flex-direction: row; border-bottom: 2px solid black; padding: 4px;";
+    } else {
+      galleryItem.style = "width: 100vw;, height: 50vh; display: flex; flex-direction: row-reverse; border-bottom: 2px solid black; padding: 4px;";
+    }
+
+    galleryItemCounter += 1;
+
+    const galleryText = document.createElement("div");
+    galleryText.style = "width: 50%;, height: 100%; display: flex; flex-direction: column; justify-content: space-evenly; padding: 4px;";
+
+    const galleryImage = document.createElement("div");
+    galleryImage.style = "width: 50%;, height: 100%; display: flex; flex-direction: row; justify-content: center; align-items: center; padding: 4px;";
+
+    if (title) {
+      const titleElement = document.createElement("h2");
+      titleElement.textContent = title;
+      galleryText.appendChild(titleElement);
+    }
+
+    if (text) {
+      const textElement = document.createElement("p");
+      textElement.textContent = text;
+      galleryText.appendChild(textElement);
+    }
+
+    if (imageUrl) {
+      const imageElement = document.createElement("img");
+      imageElement.style = "width: 400px;"
+      imageElement.src = imageUrl;
+      galleryImage.appendChild(imageElement);
+    }
+
+    galleryItem.appendChild(galleryText);
+    galleryItem.appendChild(galleryImage);
+
+    targetDiv.appendChild(galleryItem);
+  });
+}
 
 // --- Vertical Multiple Bar Chart --- //
 function VerticalMultipleBarChartCsvParser(
@@ -1180,8 +1267,8 @@ function SingleNightingaleChart(
     });
 
     // Define the color range
-    const startColor = [0, 27, 84]; // rgb(0,27,84)
-    const endColor = [33, 189, 185]; // rgb(33,189,185)
+    const startColor = hexToRgb(dashboardColorList[0]); // rgb(0,27,84)
+    const endColor = hexToRgb(dashboardColorList[1]); // rgb(33,189,185)
 
     // Calculate color gradient step
     const colorCount = data.length;
@@ -1865,6 +1952,19 @@ function generatePercentages(length) {
   }
 
   return percentages;
+}
+
+function hexToRgb(hex) {
+  // Remove '#' if present
+  hex = hex.replace(/^#/, '');
+
+  // Parse hex to R, G, B values
+  let r = parseInt(hex.substring(0, 2), 16);
+  let g = parseInt(hex.substring(2, 4), 16);
+  let b = parseInt(hex.substring(4, 6), 16);
+
+  // Return RGB array
+  return [r, g, b];
 }
 
 // RUN ALL //
