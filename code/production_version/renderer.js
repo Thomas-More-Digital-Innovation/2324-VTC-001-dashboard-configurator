@@ -28,6 +28,8 @@ async function constructPage() {
     for (let i = 1; i <= graphlist.length; i++) {
       const graphId = graphlist[i - 1].getAttribute("id");
       const graphType = graphsAttributeList[parseInt(graphId)].type;
+      const graphWidth = graphsAttributeList[parseInt(graphId)].width;
+      const graphHeight = graphsAttributeList[parseInt(graphId)].height;
       const graphTitle = graphsAttributeList[parseInt(graphId)].title;
       const graphSubTitle = graphsAttributeList[parseInt(graphId)].subtitle;
       const showLegenda = graphsAttributeList[parseInt(graphId)].showLegenda;
@@ -40,6 +42,8 @@ async function constructPage() {
         case "vmbar":
           VerticalMultipleBarChart(
             graphId,
+            graphWidth,
+            graphHeight,
             graphTitle,
             graphSubTitle,
             showLegenda,
@@ -54,6 +58,8 @@ async function constructPage() {
         case "hmbar":
           HorizontalMultipleBarChart(
             graphId,
+            graphWidth,
+            graphHeight,
             graphTitle,
             graphSubTitle,
             showLegenda,
@@ -68,6 +74,8 @@ async function constructPage() {
         case "stackedbar":
           StackedBarChart(
             graphId,
+            graphWidth,
+            graphHeight,
             graphTitle,
             graphSubTitle,
             showLegenda,
@@ -82,6 +90,8 @@ async function constructPage() {
         case "stackedline":
           StackedLineChart(
             graphId,
+            graphWidth,
+            graphHeight,
             graphTitle,
             graphSubTitle,
             showLegenda,
@@ -99,6 +109,8 @@ async function constructPage() {
         case "donut":
           DonutChart(
             graphId,
+            graphWidth,
+            graphHeight,
             graphTitle,
             graphSubTitle,
             showLegenda,
@@ -109,6 +121,8 @@ async function constructPage() {
         case "radar":
           RadarChart(
             graphId,
+            graphWidth,
+            graphHeight,
             graphTitle,
             graphSubTitle,
             showLegenda,
@@ -121,6 +135,8 @@ async function constructPage() {
             graphsAttributeList[parseInt(graphId)].changedNames;
           SingleNightingaleChart(
             graphId,
+            graphWidth,
+            graphHeight,
             graphTitle,
             graphSubTitle,
             changedNames,
@@ -136,6 +152,8 @@ async function constructPage() {
         case "mntgale":
           MultipleNightingaleChart(
             graphId,
+            graphWidth,
+            graphHeight,
             graphTitle,
             graphSubTitle,
             showLegenda,
@@ -148,11 +166,14 @@ async function constructPage() {
           );
           break;
         case "scatterplot":
-          ScatterPlotChart(graphId);
+          ScatterPlotChart(graphId, graphWidth,
+            graphHeight);
           break;
         case "scatteraxis":
           ScatterAxisChart(
             graphId,
+            graphWidth,
+            graphHeight,
             graphTitle,
             graphSubTitle,
             showLegenda,
@@ -162,16 +183,20 @@ async function constructPage() {
           console.log(ScatterAxisChartCsvParser(content, graphTargetColumn));
           break;
         case "scattercluster":
-          ScatterClusterChart(graphId);
+          ScatterClusterChart(graphId, graphWidth,
+            graphHeight);
           break;
         case "heat":
-          HeatmapChart(graphId);
+          HeatmapChart(graphId, graphWidth,
+            graphHeight);
           break;
         case "gauge":
-          GaugeChart(graphId);
+          GaugeChart(graphId, graphWidth,
+            graphHeight);
           break;
         case "fillshape":
-          FillShapeChart(graphId);
+          FillShapeChart(graphId, graphWidth,
+            graphHeight);
           break;
         case "gallery":
           createGalleryFromCSV(content, graphsAttributeList[parseInt(graphId)].titleColumn, graphsAttributeList[parseInt(graphId)].textColumn, graphsAttributeList[parseInt(graphId)].imageColumn, graphId);
@@ -282,6 +307,8 @@ function displayXMLContent(xmlDoc) {
             case "vmbar":
               graphsAttributeList.push({
                 type: graphs[l].getAttribute("type"),
+                width: graphs[l].getAttribute("width"),
+                height: graphs[l].getAttribute("height"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
                 timeColumn: graphs[l].getAttribute("timeColumn"),
@@ -295,6 +322,8 @@ function displayXMLContent(xmlDoc) {
             case "hmbar":
               graphsAttributeList.push({
                 type: graphs[l].getAttribute("type"),
+                width: graphs[l].getAttribute("width"),
+                height: graphs[l].getAttribute("height"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
                 timeColumn: graphs[l].getAttribute("timeColumn"),
@@ -308,6 +337,8 @@ function displayXMLContent(xmlDoc) {
             case "stackedbar":
               graphsAttributeList.push({
                 type: graphs[l].getAttribute("type"),
+                width: graphs[l].getAttribute("width"),
+                height: graphs[l].getAttribute("height"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
                 timeColumn: graphs[l].getAttribute("timeColumn"),
@@ -321,6 +352,8 @@ function displayXMLContent(xmlDoc) {
             case "stackedline":
               graphsAttributeList.push({
                 type: graphs[l].getAttribute("type"),
+                width: graphs[l].getAttribute("width"),
+                height: graphs[l].getAttribute("height"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
                 timeColumn: graphs[l].getAttribute("timeColumn"),
@@ -334,6 +367,8 @@ function displayXMLContent(xmlDoc) {
             case "histo":
               graphsAttributeList.push({
                 type: graphs[l].getAttribute("type"),
+                width: graphs[l].getAttribute("width"),
+                height: graphs[l].getAttribute("height"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
                 targetColumn: graphs[l].getAttribute("targetColumn"),
@@ -346,6 +381,8 @@ function displayXMLContent(xmlDoc) {
             case "donut":
               graphsAttributeList.push({
                 type: graphs[l].getAttribute("type"),
+                width: graphs[l].getAttribute("width"),
+                height: graphs[l].getAttribute("height"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
                 targetColumn: graphs[l].getAttribute("targetColumn"),
@@ -358,6 +395,8 @@ function displayXMLContent(xmlDoc) {
             case "radar":
               graphsAttributeList.push({
                 type: graphs[l].getAttribute("type"),
+                width: graphs[l].getAttribute("width"),
+                height: graphs[l].getAttribute("height"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
                 timeColumn: graphs[l].getAttribute("timeColumn"),
@@ -371,6 +410,8 @@ function displayXMLContent(xmlDoc) {
             case "sntgale":
               graphsAttributeList.push({
                 type: graphs[l].getAttribute("type"),
+                width: graphs[l].getAttribute("width"),
+                height: graphs[l].getAttribute("height"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
                 targetColumn: graphs[l].getAttribute("targetColumn"),
@@ -383,6 +424,8 @@ function displayXMLContent(xmlDoc) {
             case "mntgale":
               graphsAttributeList.push({
                 type: graphs[l].getAttribute("type"),
+                width: graphs[l].getAttribute("width"),
+                height: graphs[l].getAttribute("height"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
                 timeColumn: graphs[l].getAttribute("timeColumn"),
@@ -395,6 +438,8 @@ function displayXMLContent(xmlDoc) {
             case "scatterplot":
               graphsAttributeList.push({
                 type: graphs[l].getAttribute("type"),
+                width: graphs[l].getAttribute("width"),
+                height: graphs[l].getAttribute("height"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
                 targetColumn: graphs[l].getAttribute("targetColumn"),
@@ -407,6 +452,8 @@ function displayXMLContent(xmlDoc) {
             case "scatteraxis":
               graphsAttributeList.push({
                 type: graphs[l].getAttribute("type"),
+                width: graphs[l].getAttribute("width"),
+                height: graphs[l].getAttribute("height"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
                 targetColumn: graphs[l].getAttribute("targetColumn"),
@@ -419,6 +466,8 @@ function displayXMLContent(xmlDoc) {
             case "gauge":
               graphsAttributeList.push({
                 type: graphs[l].getAttribute("type"),
+                width: graphs[l].getAttribute("width"),
+                height: graphs[l].getAttribute("height"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
                 targetColumn: graphs[l].getAttribute("targetColumn"),
@@ -431,6 +480,8 @@ function displayXMLContent(xmlDoc) {
             case "fillshape":
               graphsAttributeList.push({
                 type: graphs[l].getAttribute("type"),
+                width: graphs[l].getAttribute("width"),
+                height: graphs[l].getAttribute("height"),
                 title: graphs[l].getAttribute("title"),
                 subtitle: graphs[l].getAttribute("subtitle"),
                 targetColumn: graphs[l].getAttribute("targetColumn"),
@@ -560,7 +611,7 @@ function createGalleryFromCSV(content, titleColumnName, textColumnName, imageCol
     galleryItemCounter += 1;
 
     const galleryText = document.createElement("div");
-    galleryText.style = "width: 50%;, height: 100%; display: flex; flex-direction: column; justify-content: space-evenly; padding: 4px;";
+    galleryText.style = "width: 50%;, height: 100%; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center; padding: 4px;";
 
     const galleryImage = document.createElement("div");
     galleryImage.style = "width: 50%;, height: 100%; display: flex; flex-direction: row; justify-content: center; align-items: center; padding: 4px;";
@@ -649,6 +700,8 @@ function VerticalMultipleBarChartCsvParser(
 
 function VerticalMultipleBarChart(
   id,
+  width,
+  height,
   title,
   subtitle,
   showLegenda,
@@ -657,8 +710,8 @@ function VerticalMultipleBarChart(
 ) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "80%",
-      height: "80%",
+      width: width,
+      height: height,
     });
 
     // Generate color gradient
@@ -762,6 +815,8 @@ function HorizontalMultipleBarChartCsvParser(
 
 function HorizontalMultipleBarChart(
   id,
+  width,
+  height,
   title,
   subtitle,
   showLegenda,
@@ -770,8 +825,8 @@ function HorizontalMultipleBarChart(
 ) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "80%",
-      height: "80%",
+      width: width,
+      height: height,
     });
 
     // Generate color gradient
@@ -884,11 +939,12 @@ function StackedBarChartCsvParser(content, timeColumnName, targetColumnName) {
 
   return result;
 }
-function StackedBarChart(id, title, subtitle, showLegenda, legendaView, data) {
+function StackedBarChart(id, width,
+  height, title, subtitle, showLegenda, legendaView, data) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "80%",
-      height: "80%",
+      width: width,
+      height: height,
     });
 
     // Generate color gradient
@@ -1023,11 +1079,12 @@ function StackedLineChartCsvParser(content, timeColumnName, targetColumnName) {
 
   return result;
 }
-function StackedLineChart(id, title, subtitle, showLegenda, legendaView, data) {
+function StackedLineChart(id, width,
+  height, title, subtitle, showLegenda, legendaView, data) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "80%",
-      height: "80%",
+      width: width,
+      height: height,
     });
 
     // Generate color gradient
@@ -1091,11 +1148,11 @@ function StackedLineChart(id, title, subtitle, showLegenda, legendaView, data) {
 
 
 // --- Histogram Chart --- //
-function HistogramChart(id) {
+function HistogramChart(id, width, height) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "80%",
-      height: "80%",
+      width: width,
+      height: height,
     });
 
     var option = {
@@ -1166,11 +1223,11 @@ function DonutChartCsvParser(content, targetColumnName) {
   return result;
 }
 
-function DonutChart(id, title, subtitle, showLegenda, legendaView, data) {
+function DonutChart(id, width, height, title, subtitle, showLegenda, legendaView, data) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "100%",
-      height: "100%",
+      width: width,
+      height: height,
     });
 
     // Generate color gradient
@@ -1266,11 +1323,11 @@ function RadarChartCsvParser(content, timeColumnName, targetColumnName) {
   return result;
 }
 
-function RadarChart(id, title, subtitle, showLegenda, legendaView, data) {
+function RadarChart(id, width, height, title, subtitle, showLegenda, legendaView, data) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "100%",
-      height: "100%",
+      width: width,
+      height: height,
     });
 
     // Generate color gradient
@@ -1361,6 +1418,8 @@ function SingleNightingaleChartCsvParser(content, targetColumn, changedNames) {
 
 function SingleNightingaleChart(
   id,
+  width,
+  height,
   title,
   subtitle,
   changedNames,
@@ -1370,8 +1429,8 @@ function SingleNightingaleChart(
 ) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "100%",
-      height: "100%",
+      width: width,
+      height: height,
     });
 
     // Generate color gradient
@@ -1485,6 +1544,8 @@ function MulitpleNightingaleChartCsvParser(
 
 function MultipleNightingaleChart(
   id,
+  width,
+  height,
   title,
   subtitle,
   showLegenda,
@@ -1493,8 +1554,8 @@ function MultipleNightingaleChart(
 ) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "100%",
-      height: "100%",
+      width: width,
+      height: height,
     });
 
     // Generate color gradient
@@ -1565,11 +1626,11 @@ function MultipleNightingaleChart(
 
 
 // --- Scatter Plot Chart --- //
-function ScatterPlotChart(id) {
+function ScatterPlotChart(id, width, height) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "80%",
-      height: "80%",
+      width: width,
+      height: height,
     });
 
     option = {
@@ -1661,16 +1722,14 @@ function ScatterAxisChartCsvParser(content, targetColumn) {
 
   return extractedColumns;
 }
-function ScatterAxisChart(id, title, subtitle, showLegenda, legendaView, data) {
+function ScatterAxisChart(id, width, height, title, subtitle, showLegenda, legendaView, data) {
   function generateAxisLabels() {
     let labels = [];
     for (let i = 0; i < 100; i++) {
       if (i === 7) {
-        labels.push('disagree');
-      } else if (i === 50) {
-        labels.push('neutral');
+        labels.push('ontevreden');
       } else if (i === 92) {
-        labels.push('agree');
+        labels.push('tevreden');
       } else {
         labels.push('');
       }
@@ -1680,8 +1739,8 @@ function ScatterAxisChart(id, title, subtitle, showLegenda, legendaView, data) {
 
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "100%",
-      height: "100%",
+      width: width,
+      height: height,
     });
 
     const labels = generateAxisLabels();
@@ -1716,7 +1775,7 @@ function ScatterAxisChart(id, title, subtitle, showLegenda, legendaView, data) {
         axisLabel: {
           interval: function (index) {
             // Show label only for the first, middle, and last ones
-            return index === 7 || index === Math.floor(labels.length / 2) || index === labels.length - 8;
+            return index === 7 || index === labels.length - 8;
           }
         },
       });
@@ -1766,11 +1825,11 @@ function ScatterAxisChart(id, title, subtitle, showLegenda, legendaView, data) {
 
 
 // --- Gauge Chart --- //
-function GaugeChart(id) {
+function GaugeChart(id, width, height) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "80%",
-      height: "80%",
+      width: width,
+      height: height,
     });
 
     option = {
@@ -1865,11 +1924,11 @@ function GaugeChart(id) {
   });
 }
 // --- Fill Shape Chart --- //
-function FillShapeChart(id) {
+function FillShapeChart(id, width, height) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "80%",
-      height: "80%",
+      width: width,
+      height: height,
     });
 
     const symbols = [

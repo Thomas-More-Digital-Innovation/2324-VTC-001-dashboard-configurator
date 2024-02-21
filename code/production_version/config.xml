@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dashboard primaryColor="#090b42" secondaryColor="#29b4cc">
+<!-- <dashboard primaryColor="#090b42" secondaryColor="#29b4cc"></dashboard> -->
+<dashboard primaryColor="#FF0000" secondaryColor="#0000FF">
     <screen color="#EEEEEE" title="Schermtitel 1" title-txt-color="black"
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
                 <chart type="vmbar" title="Vertical Multiple Bar Chart" width="80%" height="80%" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="horizontal">
+                </chart>
+            </section>
+        </row>
+    </screen>
+    <screen color="#EEEEEE" title="Schermtitel 1" title-txt-color="black"
+        title-bg-color="white">
+        <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
+            <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
+                <chart type="vmbar" title="Vertical Multiple Bar Chart" width="80%" height="80%" subtitle="test" timeColumn="10. Hoe lang wil je in de straat wonen?_Clustered"  showLegenda="true" legendaView="horizontal">
                 </chart>
             </section>
         </row>
@@ -31,12 +41,12 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="stackedline" title="Stacked Line Chart" width="80%" height="80%" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="horizontal">
+                <chart type="stackedline" title="Stacked Line Chart" width="90%" height="80%" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="horizontal">
                 </chart>
             </section>
         </row>
     </screen>
-    <!-- <screen color="#EEEEEE" title="Schermtitel 1" title-txt-color="black"
+    <screen color="#EEEEEE" title="Schermtitel 1" title-txt-color="black"
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black"
@@ -45,7 +55,7 @@
                 </chart>
             </section>
         </row>
-    </screen> -->
+    </screen>
     <screen color="#EEEEEE" title="Schermtitel 1" title-txt-color="black"
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
@@ -99,7 +109,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="scatteraxis" width="80%" height="80%"  title="Scatter Axis Chart" subtitle="test" targetColumn="L1_ScoreLeefbaarheid_ThemaInrichtingvan de straat;L1_ScoreLeefbaarheid_Sociaal;L1_ScoreLeefbaarheid_Omgevingsfactoren" showLegenda="true" legendaView="horizontal">
+                <chart type="scatteraxis" width="100%" height="100%"  title="Scatter Axis Chart" subtitle="test" targetColumn="L1_ScoreLeefbaarheid_ThemaInrichtingvan de straat;L1_ScoreLeefbaarheid_Sociaal;L1_ScoreLeefbaarheid_Omgevingsfactoren" showLegenda="true" legendaView="horizontal">
                 </chart>
             </section>
         </row>
@@ -125,7 +135,7 @@
     <screen>
         <row>
             <section width="1/1">
-                <chart type="gallery" titleColumn="TitelVerhaal" textColumn="Storyfragment (Vertel iets over je straat?)" imageColumn="Afbeelding">
+                <chart type="gallery" imageColumn="Afbeelding">
                 </chart>
             </section>
         </row>
