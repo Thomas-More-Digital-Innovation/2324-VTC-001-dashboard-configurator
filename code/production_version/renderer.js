@@ -46,8 +46,8 @@ async function constructPage() {
             legendaView,
             VerticalMultipleBarChartCsvParser(
               content,
-              graphTimeColumn,
-              graphTargetColumn
+              graphTargetColumn,
+              graphTimeColumn
             )
           );
           break;
@@ -60,8 +60,8 @@ async function constructPage() {
             legendaView,
             HorizontalMultipleBarChartCsvParser(
               content,
-              graphTimeColumn,
-              graphTargetColumn
+              graphTargetColumn,
+              graphTimeColumn
             )
           );
           break;
@@ -74,8 +74,8 @@ async function constructPage() {
             legendaView,
             StackedBarChartCsvParser(
               content,
-              graphTimeColumn,
-              graphTargetColumn
+              graphTargetColumn,
+              graphTimeColumn
             )
           );
           break;
@@ -88,8 +88,8 @@ async function constructPage() {
             legendaView,
             StackedLineChartCsvParser(
               content,
-              graphTimeColumn,
-              graphTargetColumn
+              graphTargetColumn,
+              graphTimeColumn
             )
           );
           break;
@@ -113,7 +113,7 @@ async function constructPage() {
             graphSubTitle,
             showLegenda,
             legendaView,
-            RadarChartCsvParser(content, graphTimeColumn, graphTargetColumn)
+            RadarChartCsvParser(content, graphTargetColumn, graphTimeColumn)
           );
           break;
         case "sntgale":
@@ -142,8 +142,8 @@ async function constructPage() {
             legendaView,
             MulitpleNightingaleChartCsvParser(
               content,
-              graphTimeColumn,
-              graphTargetColumn
+              graphTargetColumn,
+              graphTimeColumn
             )
           );
           break;
@@ -642,6 +642,10 @@ function VerticalMultipleBarChartCsvParser(
   return output;
 }
 
+
+
+
+
 function VerticalMultipleBarChart(
   id,
   title,
@@ -655,6 +659,19 @@ function VerticalMultipleBarChart(
       width: "80%",
       height: "80%",
     });
+
+    // Generate color gradient
+    const colorGradient = [];
+    for (let i = 0; i < data.length; i++) {
+      const ratio = i / (data.length - 2);
+      const r = Math.round(parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) + parseInt("#0000FF".substring(1, 3), 16) * ratio);
+      const g = Math.round(parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) + parseInt("#0000FF".substring(3, 5), 16) * ratio);
+      const b = Math.round(parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) + parseInt("#0000FF".substring(5, 7), 16) * ratio);
+      const color = `rgb(${r}, ${g}, ${b})`;
+      colorGradient.push(color);
+    }
+
+    console.log(data)
 
     option = {
       title: {
@@ -673,7 +690,12 @@ function VerticalMultipleBarChart(
       },
       xAxis: { type: "category" },
       yAxis: {},
-      series: [{ type: "bar" }, { type: "bar" }, { type: "bar" }],
+      series: data.slice(0, -1).map((_, i) => ({ // Exclude the last entry
+        type: "bar",
+        itemStyle: {
+          color: colorGradient[i], // Assign generated colors to each data item
+        },
+      })),
     };
 
     chart.setOption(option);
@@ -681,6 +703,7 @@ function VerticalMultipleBarChart(
     resolve();
   });
 }
+
 
 // --- Horizontal Multiple Bar Chart --- //
 function HorizontalMultipleBarChartCsvParser(
@@ -751,6 +774,26 @@ function HorizontalMultipleBarChart(
       height: "80%",
     });
 
+    // Generate color gradient
+    const colorGradient = [];
+    for (let i = 0; i < data[1].length; i++) {
+      const ratio = i / (data[1].length - 1);
+      const r = Math.round(
+        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(1, 3), 16) * ratio
+      );
+      const g = Math.round(
+        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(3, 5), 16) * ratio
+      );
+      const b = Math.round(
+        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(5, 7), 16) * ratio
+      );
+      const color = `rgb(${r}, ${g}, ${b})`;
+      colorGradient.push(color);
+    }
+
     option = {
       title: {
         text: title,
@@ -761,6 +804,7 @@ function HorizontalMultipleBarChart(
         show: showLegenda,
         top: "60px",
         orient: legendaView,
+        data: data[0], // Set legend data
       },
       tooltip: {
         trigger: "axis",
@@ -782,7 +826,13 @@ function HorizontalMultipleBarChart(
         type: "category",
         data: data[0],
       },
-      series: data[1],
+      series: data[1].map((series, i) => ({
+        type: "bar",
+        itemStyle: {
+          color: colorGradient[i], // Assign generated colors to each data item
+        },
+        data: series.data,
+      })),
     };
 
     chart.setOption(option);
@@ -790,6 +840,8 @@ function HorizontalMultipleBarChart(
     resolve();
   });
 }
+
+
 
 // --- Stacked Bar Chart --- //
 function StackedBarChartCsvParser(content, timeColumnName, targetColumnName) {
@@ -849,6 +901,26 @@ function StackedBarChart(id, title, subtitle, showLegenda, legendaView, data) {
       height: "80%",
     });
 
+    // Generate color gradient
+    const colorGradient = [];
+    for (let i = 0; i < data[1].length; i++) {
+      const ratio = i / (data[1].length - 1);
+      const r = Math.round(
+        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(1, 3), 16) * ratio
+      );
+      const g = Math.round(
+        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(3, 5), 16) * ratio
+      );
+      const b = Math.round(
+        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(5, 7), 16) * ratio
+      );
+      const color = `rgb(${r}, ${g}, ${b})`;
+      colorGradient.push(color);
+    }
+
     var series = data[1];
     const stackInfo = {};
     for (let i = 0; i < series[0].data.length; ++i) {
@@ -904,7 +976,12 @@ function StackedBarChart(id, title, subtitle, showLegenda, legendaView, data) {
       yAxis: {
         type: "value",
       },
-      series: series,
+      series: series.map((seriesItem, i) => ({
+        ...seriesItem,
+        itemStyle: {
+          color: colorGradient[i % colorGradient.length], // Assign generated colors to each series
+        },
+      })),
     };
 
     chart.setOption(option);
@@ -912,6 +989,7 @@ function StackedBarChart(id, title, subtitle, showLegenda, legendaView, data) {
     resolve();
   });
 }
+
 
 // --- Stacked Line Chart --- //
 function StackedLineChartCsvParser(content, timeColumnName, targetColumnName) {
@@ -971,6 +1049,26 @@ function StackedLineChart(id, title, subtitle, showLegenda, legendaView, data) {
       height: "80%",
     });
 
+    // Generate color gradient
+    const colorGradient = [];
+    for (let i = 0; i < data[1].length; i++) {
+      const ratio = i / (data[1].length - 1);
+      const r = Math.round(
+        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(1, 3), 16) * ratio
+      );
+      const g = Math.round(
+        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(3, 5), 16) * ratio
+      );
+      const b = Math.round(
+        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(5, 7), 16) * ratio
+      );
+      const color = `rgb(${r}, ${g}, ${b})`;
+      colorGradient.push(color);
+    }
+
     option = {
       title: {
         text: title,
@@ -985,9 +1083,6 @@ function StackedLineChart(id, title, subtitle, showLegenda, legendaView, data) {
       tooltip: {
         trigger: "axis",
       },
-      // legend: {
-      //   data: ["Email", "Union Ads", "Video Ads", "Direct", "Search Engine"],
-      // },
       grid: {
         left: "3%",
         right: "4%",
@@ -1007,7 +1102,13 @@ function StackedLineChart(id, title, subtitle, showLegenda, legendaView, data) {
       yAxis: {
         type: "value",
       },
-      series: data[1],
+      series: data[1].map((seriesItem, i) => ({
+        ...seriesItem,
+        type: "line",
+        itemStyle: {
+          color: colorGradient[i % colorGradient.length], // Assign generated colors to each series
+        },
+      })),
     };
 
     chart.setOption(option);
@@ -1015,6 +1116,7 @@ function StackedLineChart(id, title, subtitle, showLegenda, legendaView, data) {
     resolve();
   });
 }
+
 
 // --- Histogram Chart --- //
 function HistogramChart(id) {
@@ -1099,6 +1201,26 @@ function DonutChart(id, title, subtitle, showLegenda, legendaView, data) {
       height: "100%",
     });
 
+    // Generate color gradient
+    const colorGradient = [];
+    for (let i = 0; i < data.length; i++) {
+      const ratio = i / (data.length - 1);
+      const r = Math.round(
+        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(1, 3), 16) * ratio
+      );
+      const g = Math.round(
+        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(3, 5), 16) * ratio
+      );
+      const b = Math.round(
+        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(5, 7), 16) * ratio
+      );
+      const color = `rgb(${r}, ${g}, ${b})`;
+      colorGradient.push(color);
+    }
+
     option = {
       title: {
         text: title,
@@ -1125,7 +1247,12 @@ function DonutChart(id, title, subtitle, showLegenda, legendaView, data) {
           labelLine: {
             show: false,
           },
-          data: data,
+          data: data.map((item, i) => ({
+            ...item,
+            itemStyle: {
+              color: colorGradient[i % colorGradient.length], // Assign generated colors to each item
+            },
+          })),
         },
       ],
     };
@@ -1135,6 +1262,7 @@ function DonutChart(id, title, subtitle, showLegenda, legendaView, data) {
     resolve();
   });
 }
+
 // --- Radar Chart --- //
 function RadarChartCsvParser(content, timeColumnName, targetColumnName) {
   const rows = content.split("\n");
@@ -1182,6 +1310,26 @@ function RadarChart(id, title, subtitle, showLegenda, legendaView, data) {
       height: "100%",
     });
 
+    // Generate color gradient
+    const colorGradient = [];
+    for (let i = 0; i < data[1].length; i++) {
+      const ratio = i / (data[1].length - 1);
+      const r = Math.round(
+        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(1, 3), 16) * ratio
+      );
+      const g = Math.round(
+        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(3, 5), 16) * ratio
+      );
+      const b = Math.round(
+        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(5, 7), 16) * ratio
+      );
+      const color = `rgb(${r}, ${g}, ${b})`;
+      colorGradient.push(color);
+    }
+
     option = {
       title: {
         text: title,
@@ -1201,7 +1349,12 @@ function RadarChart(id, title, subtitle, showLegenda, legendaView, data) {
         {
           name: "Budget vs spending",
           type: "radar",
-          data: data[1],
+          data: data[1].map((item, i) => ({
+            ...item,
+            itemStyle: {
+              color: colorGradient[i % colorGradient.length], // Assign generated colors to each item
+            },
+          })),
         },
       ],
     };
@@ -1211,6 +1364,7 @@ function RadarChart(id, title, subtitle, showLegenda, legendaView, data) {
     resolve();
   });
 }
+
 // --- Single Nightingale Chart --- //
 function SingleNightingaleChartCsvParser(content, targetColumn, changedNames) {
   const rows = content.split("\n");
@@ -1266,27 +1420,24 @@ function SingleNightingaleChart(
       height: "100%",
     });
 
-    // Define the color range
-    const startColor = hexToRgb(dashboardColorList[0]); // rgb(0,27,84)
-    const endColor = hexToRgb(dashboardColorList[1]); // rgb(33,189,185)
-
-    // Calculate color gradient step
-    const colorCount = data.length;
-    const colorStep = [
-      (endColor[0] - startColor[0]) / colorCount,
-      (endColor[1] - startColor[1]) / colorCount,
-      (endColor[2] - startColor[2]) / colorCount,
-    ];
-
-    // Generate colors within the specified range
-    const colors = [];
-    for (let i = 0; i < colorCount; i++) {
-      const newColor = [
-        Math.round(startColor[0] + colorStep[0] * i),
-        Math.round(startColor[1] + colorStep[1] * i),
-        Math.round(startColor[2] + colorStep[2] * i),
-      ];
-      colors.push(`rgb(${newColor.join(",")})`);
+    // Generate color gradient
+    const colorGradient = [];
+    for (let i = 0; i < data.length; i++) {
+      const ratio = i / (data.length - 1);
+      const r = Math.round(
+        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(1, 3), 16) * ratio
+      );
+      const g = Math.round(
+        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(3, 5), 16) * ratio
+      );
+      const b = Math.round(
+        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
+        parseInt("#0000FF".substring(5, 7), 16) * ratio
+      );
+      const color = `rgb(${r}, ${g}, ${b})`;
+      colorGradient.push(color);
     }
 
     const option = {
@@ -1324,11 +1475,11 @@ function SingleNightingaleChart(
           itemStyle: {
             borderRadius: 8,
           },
-          data: data.map((item, index) => ({
+          data: data.map((item, i) => ({
             value: item.value,
             name: item.name,
             itemStyle: {
-              color: colors[index], // Assign generated colors to each data item
+              color: colorGradient[i % colorGradient.length], // Assign generated colors to each data item
             },
           })),
         },
@@ -1340,6 +1491,7 @@ function SingleNightingaleChart(
     resolve();
   });
 }
+
 
 // --- Multiple Nightingale Chart --- //
 function MulitpleNightingaleChartCsvParser(
@@ -1400,27 +1552,24 @@ function MultipleNightingaleChart(
       height: "100%",
     });
 
-    // Define the color range
-    const startColor = [0, 27, 84]; // rgb(0,27,84)
-    const endColor = [33, 189, 185]; // rgb(33,189,185)
-
-    // Calculate color gradient step
-    const colorCount = data.length;
-    const colorStep = [
-      (endColor[0] - startColor[0]) / colorCount,
-      (endColor[1] - startColor[1]) / colorCount,
-      (endColor[2] - startColor[2]) / colorCount,
-    ];
-
-    // Generate colors within the specified range
-    const colors = [];
-    for (let i = 0; i < colorCount; i++) {
-      const newColor = [
-        Math.round(startColor[0] + colorStep[0] * i),
-        Math.round(startColor[1] + colorStep[1] * i),
-        Math.round(startColor[2] + colorStep[2] * i),
-      ];
-      colors.push(`rgb(${newColor.join(",")})`);
+    // Generate color gradient
+    const colorGradient = [];
+    for (let i = 0; i < data.length; i++) {
+      const ratio = i / (data.length - 1);
+      const r = Math.round(
+        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
+          parseInt("#0000FF".substring(1, 3), 16) * ratio
+      );
+      const g = Math.round(
+        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
+          parseInt("#0000FF".substring(3, 5), 16) * ratio
+      );
+      const b = Math.round(
+        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
+          parseInt("#0000FF".substring(5, 7), 16) * ratio
+      );
+      const color = `rgb(${r}, ${g}, ${b})`;
+      colorGradient.push(color);
     }
 
     let dataArray = [];
@@ -1439,7 +1588,7 @@ function MultipleNightingaleChart(
           value: item.value,
           name: item.name,
           itemStyle: {
-            color: colors[index], // Assign generated colors to each data item
+            color: colorGradient[index % colorGradient.length], // Assign generated colors to each data item
           },
         })),
       });
@@ -1477,6 +1626,7 @@ function MultipleNightingaleChart(
     resolve();
   });
 }
+
 
 // --- Scatter Plot Chart --- //
 function ScatterPlotChart(id) {
@@ -1517,6 +1667,9 @@ function ScatterPlotChart(id) {
             [5.02, 5.68],
           ],
           type: "scatter",
+          itemStyle: {
+            color: dashboardColorList[0], // Custom color
+          },
         },
       ],
     };
@@ -1526,6 +1679,7 @@ function ScatterPlotChart(id) {
     resolve();
   });
 }
+
 // --- Scatter Axis Chart --- //
 function ScatterAxisChartCsvParser(content, targetColumn) {
   const rows = content.split("\n");
@@ -1571,7 +1725,6 @@ function ScatterAxisChartCsvParser(content, targetColumn) {
 
   return extractedColumns;
 }
-
 function ScatterAxisChart(id, title, subtitle, showLegenda, legendaView, data) {
   function generateNumberStrings() {
     let numbers = [];
@@ -1588,18 +1741,37 @@ function ScatterAxisChart(id, title, subtitle, showLegenda, legendaView, data) {
     });
 
     const hours = generateNumberStrings();
-    // prettier-ignore
-    // const data = [[0, 0, 5], [0, 1, 1], [0, 2, 0], [0, 3, 0], [0, 4, 0], [0, 5, 0], [0, 6, 0], [0, 7, 0], [0, 8, 0], [0, 9, 0], [0, 10, 0], [0, 11, 2], [0, 12, 4], [0, 13, 1], [0, 14, 1], [0, 15, 3], [0, 16, 4], [0, 17, 6], [0, 18, 4], [0, 19, 4], [0, 20, 3], [0, 21, 3], [0, 22, 2], [0, 23, 5], [1, 0, 7], [1, 1, 0], [1, 2, 0], [1, 3, 0], [1, 4, 0], [1, 5, 0], [1, 6, 0], [1, 7, 0], [1, 8, 0], [1, 9, 0], [1, 10, 5], [1, 11, 2], [1, 12, 2], [1, 13, 6], [1, 14, 9], [1, 15, 11], [1, 16, 6], [1, 17, 7], [1, 18, 8], [1, 19, 12], [1, 20, 5], [1, 21, 5], [1, 22, 7], [1, 23, 2]];
-    const title = [];
-    const singleAxis = [];
-    const series = [];
+    const titleData = [];
+    const singleAxisData = [];
+    const seriesData = [];
+
+    // Generate color gradient
+    const colorGradient = [];
+    for (let i = 0; i < data[1].length; i++) {
+      const ratio = i / (data[1].length - 1);
+      const r = Math.round(
+        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
+          parseInt("#0000FF".substring(1, 3), 16) * ratio
+      );
+      const g = Math.round(
+        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
+          parseInt("#0000FF".substring(3, 5), 16) * ratio
+      );
+      const b = Math.round(
+        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
+          parseInt("#0000FF".substring(5, 7), 16) * ratio
+      );
+      const color = `rgb(${r}, ${g}, ${b})`;
+      colorGradient.push(color);
+    }
+
     data[0].forEach(function (day, idx) {
-      title.push({
+      titleData.push({
         textBaseline: "middle",
         top: ((idx + 0.2) * 100) / 7 + "%",
         text: day,
       });
-      singleAxis.push({
+      singleAxisData.push({
         left: 150,
         type: "category",
         boundaryGap: false,
@@ -1610,7 +1782,8 @@ function ScatterAxisChart(id, title, subtitle, showLegenda, legendaView, data) {
           interval: 2,
         },
       });
-      series.push({
+
+      const seriesItem = {
         singleAxisIndex: idx,
         coordinateSystem: "singleAxis",
         type: "scatter",
@@ -1618,24 +1791,36 @@ function ScatterAxisChart(id, title, subtitle, showLegenda, legendaView, data) {
         symbolSize: function (dataItem) {
           return dataItem[1] * 4;
         },
+      };
+
+      seriesData.push(seriesItem);
+    });
+
+    data[1].forEach(function (dataItem, i) {
+      seriesData[dataItem[0]].data.push({
+        value: [dataItem[1], dataItem[2]],
+        itemStyle: {
+          color: colorGradient[i % colorGradient.length], // Assign colors from the color gradient
+        },
       });
     });
-    data[1].forEach(function (dataItem) {
-      series[dataItem[0]].data.push([dataItem[1], dataItem[2]]);
-    });
+
     option = {
       tooltip: {
         position: "top",
       },
-      title: title,
-      singleAxis: singleAxis,
-      series: series,
+      title: titleData,
+      singleAxis: singleAxisData,
+      series: seriesData,
     };
+
     chart.setOption(option);
 
     resolve();
   });
 }
+
+
 
 // --- Gauge Chart --- //
 function GaugeChart(id) {
