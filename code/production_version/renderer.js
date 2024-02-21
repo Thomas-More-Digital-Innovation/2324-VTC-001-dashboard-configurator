@@ -261,6 +261,7 @@ function displayXMLContent(xmlDoc) {
           if (graphs[l].getAttribute("type") == "gallery") {
             graphDiv.style =
               "overflow-y: scroll"
+            graphDiv.classList.add("gallery")
           }
           graphDiv.classList.add("graph");
           let changedNames = [];
@@ -664,14 +665,12 @@ function VerticalMultipleBarChart(
     const colorGradient = [];
     for (let i = 0; i < data.length; i++) {
       const ratio = i / (data.length - 2);
-      const r = Math.round(parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) + parseInt("#0000FF".substring(1, 3), 16) * ratio);
-      const g = Math.round(parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) + parseInt("#0000FF".substring(3, 5), 16) * ratio);
-      const b = Math.round(parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) + parseInt("#0000FF".substring(5, 7), 16) * ratio);
+      const r = Math.round(parseInt(dashboardColorList[0].substring(1, 3), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(1, 3), 16) * ratio);
+      const g = Math.round(parseInt(dashboardColorList[0].substring(3, 5), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(3, 5), 16) * ratio);
+      const b = Math.round(parseInt(dashboardColorList[0].substring(5, 7), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(5, 7), 16) * ratio);
       const color = `rgb(${r}, ${g}, ${b})`;
       colorGradient.push(color);
     }
-
-    console.log(data)
 
     option = {
       title: {
@@ -681,7 +680,7 @@ function VerticalMultipleBarChart(
       },
       legend: {
         show: showLegenda,
-        top: "60px",
+        bottom: "0px",
         orient: legendaView,
       },
       tooltip: {},
@@ -703,6 +702,7 @@ function VerticalMultipleBarChart(
     resolve();
   });
 }
+
 
 
 // --- Horizontal Multiple Bar Chart --- //
@@ -778,18 +778,9 @@ function HorizontalMultipleBarChart(
     const colorGradient = [];
     for (let i = 0; i < data[1].length; i++) {
       const ratio = i / (data[1].length - 1);
-      const r = Math.round(
-        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(1, 3), 16) * ratio
-      );
-      const g = Math.round(
-        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(3, 5), 16) * ratio
-      );
-      const b = Math.round(
-        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(5, 7), 16) * ratio
-      );
+      const r = Math.round(parseInt(dashboardColorList[0].substring(1, 3), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(1, 3), 16) * ratio);
+      const g = Math.round(parseInt(dashboardColorList[0].substring(3, 5), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(3, 5), 16) * ratio);
+      const b = Math.round(parseInt(dashboardColorList[0].substring(5, 7), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(5, 7), 16) * ratio);
       const color = `rgb(${r}, ${g}, ${b})`;
       colorGradient.push(color);
     }
@@ -802,9 +793,8 @@ function HorizontalMultipleBarChart(
       },
       legend: {
         show: showLegenda,
-        top: "60px",
-        orient: legendaView,
-        data: data[0], // Set legend data
+        bottom: "0px",
+        orient: legendaView
       },
       tooltip: {
         trigger: "axis",
@@ -905,18 +895,9 @@ function StackedBarChart(id, title, subtitle, showLegenda, legendaView, data) {
     const colorGradient = [];
     for (let i = 0; i < data[1].length; i++) {
       const ratio = i / (data[1].length - 1);
-      const r = Math.round(
-        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(1, 3), 16) * ratio
-      );
-      const g = Math.round(
-        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(3, 5), 16) * ratio
-      );
-      const b = Math.round(
-        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(5, 7), 16) * ratio
-      );
+      const r = Math.round(parseInt(dashboardColorList[0].substring(1, 3), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(1, 3), 16) * ratio);
+      const g = Math.round(parseInt(dashboardColorList[0].substring(3, 5), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(3, 5), 16) * ratio);
+      const b = Math.round(parseInt(dashboardColorList[0].substring(5, 7), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(5, 7), 16) * ratio);
       const color = `rgb(${r}, ${g}, ${b})`;
       colorGradient.push(color);
     }
@@ -966,7 +947,7 @@ function StackedBarChart(id, title, subtitle, showLegenda, legendaView, data) {
       },
       legend: {
         show: showLegenda,
-        top: "60px",
+        bottom: "0px",
         orient: legendaView,
       },
       xAxis: {
@@ -1053,18 +1034,9 @@ function StackedLineChart(id, title, subtitle, showLegenda, legendaView, data) {
     const colorGradient = [];
     for (let i = 0; i < data[1].length; i++) {
       const ratio = i / (data[1].length - 1);
-      const r = Math.round(
-        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(1, 3), 16) * ratio
-      );
-      const g = Math.round(
-        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(3, 5), 16) * ratio
-      );
-      const b = Math.round(
-        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(5, 7), 16) * ratio
-      );
+      const r = Math.round(parseInt(dashboardColorList[0].substring(1, 3), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(1, 3), 16) * ratio);
+      const g = Math.round(parseInt(dashboardColorList[0].substring(3, 5), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(3, 5), 16) * ratio);
+      const b = Math.round(parseInt(dashboardColorList[0].substring(5, 7), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(5, 7), 16) * ratio);
       const color = `rgb(${r}, ${g}, ${b})`;
       colorGradient.push(color);
     }
@@ -1077,7 +1049,7 @@ function StackedLineChart(id, title, subtitle, showLegenda, legendaView, data) {
       },
       legend: {
         show: showLegenda,
-        top: "60px",
+        bottom: "0px",
         orient: legendaView,
       },
       tooltip: {
@@ -1122,8 +1094,8 @@ function StackedLineChart(id, title, subtitle, showLegenda, legendaView, data) {
 function HistogramChart(id) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "100%",
-      height: "100%",
+      width: "80%",
+      height: "80%",
     });
 
     var option = {
@@ -1205,18 +1177,9 @@ function DonutChart(id, title, subtitle, showLegenda, legendaView, data) {
     const colorGradient = [];
     for (let i = 0; i < data.length; i++) {
       const ratio = i / (data.length - 1);
-      const r = Math.round(
-        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(1, 3), 16) * ratio
-      );
-      const g = Math.round(
-        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(3, 5), 16) * ratio
-      );
-      const b = Math.round(
-        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(5, 7), 16) * ratio
-      );
+      const r = Math.round(parseInt(dashboardColorList[0].substring(1, 3), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(1, 3), 16) * ratio);
+      const g = Math.round(parseInt(dashboardColorList[0].substring(3, 5), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(3, 5), 16) * ratio);
+      const b = Math.round(parseInt(dashboardColorList[0].substring(5, 7), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(5, 7), 16) * ratio);
       const color = `rgb(${r}, ${g}, ${b})`;
       colorGradient.push(color);
     }
@@ -1229,7 +1192,7 @@ function DonutChart(id, title, subtitle, showLegenda, legendaView, data) {
       },
       legend: {
         show: showLegenda,
-        top: "60px",
+        bottom: "0px",
         orient: legendaView,
       },
       tooltip: {
@@ -1314,18 +1277,9 @@ function RadarChart(id, title, subtitle, showLegenda, legendaView, data) {
     const colorGradient = [];
     for (let i = 0; i < data[1].length; i++) {
       const ratio = i / (data[1].length - 1);
-      const r = Math.round(
-        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(1, 3), 16) * ratio
-      );
-      const g = Math.round(
-        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(3, 5), 16) * ratio
-      );
-      const b = Math.round(
-        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(5, 7), 16) * ratio
-      );
+      const r = Math.round(parseInt(dashboardColorList[0].substring(1, 3), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(1, 3), 16) * ratio);
+      const g = Math.round(parseInt(dashboardColorList[0].substring(3, 5), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(3, 5), 16) * ratio);
+      const b = Math.round(parseInt(dashboardColorList[0].substring(5, 7), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(5, 7), 16) * ratio);
       const color = `rgb(${r}, ${g}, ${b})`;
       colorGradient.push(color);
     }
@@ -1338,7 +1292,7 @@ function RadarChart(id, title, subtitle, showLegenda, legendaView, data) {
       },
       legend: {
         show: showLegenda,
-        top: "60px",
+        bottom: "0px",
         orient: legendaView,
       },
       radar: {
@@ -1424,18 +1378,9 @@ function SingleNightingaleChart(
     const colorGradient = [];
     for (let i = 0; i < data.length; i++) {
       const ratio = i / (data.length - 1);
-      const r = Math.round(
-        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(1, 3), 16) * ratio
-      );
-      const g = Math.round(
-        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(3, 5), 16) * ratio
-      );
-      const b = Math.round(
-        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
-        parseInt("#0000FF".substring(5, 7), 16) * ratio
-      );
+      const r = Math.round(parseInt(dashboardColorList[0].substring(1, 3), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(1, 3), 16) * ratio);
+      const g = Math.round(parseInt(dashboardColorList[0].substring(3, 5), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(3, 5), 16) * ratio);
+      const b = Math.round(parseInt(dashboardColorList[0].substring(5, 7), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(5, 7), 16) * ratio);
       const color = `rgb(${r}, ${g}, ${b})`;
       colorGradient.push(color);
     }
@@ -1449,7 +1394,7 @@ function SingleNightingaleChart(
       legend: {
         show: showLegenda,
         data: changedNames.map((item) => item.changedName),
-        top: "60px",
+        bottom: "0px",
         orient: legendaView,
       },
       tooltip: {
@@ -1556,18 +1501,9 @@ function MultipleNightingaleChart(
     const colorGradient = [];
     for (let i = 0; i < data.length; i++) {
       const ratio = i / (data.length - 1);
-      const r = Math.round(
-        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
-          parseInt("#0000FF".substring(1, 3), 16) * ratio
-      );
-      const g = Math.round(
-        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
-          parseInt("#0000FF".substring(3, 5), 16) * ratio
-      );
-      const b = Math.round(
-        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
-          parseInt("#0000FF".substring(5, 7), 16) * ratio
-      );
+      const r = Math.round(parseInt(dashboardColorList[0].substring(1, 3), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(1, 3), 16) * ratio);
+      const g = Math.round(parseInt(dashboardColorList[0].substring(3, 5), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(3, 5), 16) * ratio);
+      const b = Math.round(parseInt(dashboardColorList[0].substring(5, 7), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(5, 7), 16) * ratio);
       const color = `rgb(${r}, ${g}, ${b})`;
       colorGradient.push(color);
     }
@@ -1601,7 +1537,7 @@ function MultipleNightingaleChart(
         left: "center",
       },
       legend: {
-        top: "60px",
+        bottom: "0px",
         show: showLegenda,
         orient: legendaView,
       },
@@ -1632,8 +1568,8 @@ function MultipleNightingaleChart(
 function ScatterPlotChart(id) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "100%",
-      height: "100%",
+      width: "80%",
+      height: "80%",
     });
 
     option = {
@@ -1726,21 +1662,29 @@ function ScatterAxisChartCsvParser(content, targetColumn) {
   return extractedColumns;
 }
 function ScatterAxisChart(id, title, subtitle, showLegenda, legendaView, data) {
-  function generateNumberStrings() {
-    let numbers = [];
-    for (let i = 0; i <= 1; i += 0.01) {
-      numbers.push(i.toFixed(2));
+  function generateAxisLabels() {
+    let labels = [];
+    for (let i = 0; i < 100; i++) {
+      if (i === 7) {
+        labels.push('disagree');
+      } else if (i === 50) {
+        labels.push('neutral');
+      } else if (i === 92) {
+        labels.push('agree');
+      } else {
+        labels.push('');
+      }
     }
-    return numbers;
+    return labels;
   }
 
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "80%",
-      height: "80%",
+      width: "100%",
+      height: "100%",
     });
 
-    const hours = generateNumberStrings();
+    const labels = generateAxisLabels();
     const titleData = [];
     const singleAxisData = [];
     const seriesData = [];
@@ -1749,18 +1693,9 @@ function ScatterAxisChart(id, title, subtitle, showLegenda, legendaView, data) {
     const colorGradient = [];
     for (let i = 0; i < data[1].length; i++) {
       const ratio = i / (data[1].length - 1);
-      const r = Math.round(
-        parseInt("#FF0000".substring(1, 3), 16) * (1 - ratio) +
-          parseInt("#0000FF".substring(1, 3), 16) * ratio
-      );
-      const g = Math.round(
-        parseInt("#FF0000".substring(3, 5), 16) * (1 - ratio) +
-          parseInt("#0000FF".substring(3, 5), 16) * ratio
-      );
-      const b = Math.round(
-        parseInt("#FF0000".substring(5, 7), 16) * (1 - ratio) +
-          parseInt("#0000FF".substring(5, 7), 16) * ratio
-      );
+      const r = Math.round(parseInt(dashboardColorList[0].substring(1, 3), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(1, 3), 16) * ratio);
+      const g = Math.round(parseInt(dashboardColorList[0].substring(3, 5), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(3, 5), 16) * ratio);
+      const b = Math.round(parseInt(dashboardColorList[0].substring(5, 7), 16) * (1 - ratio) + parseInt(dashboardColorList[1].substring(5, 7), 16) * ratio);
       const color = `rgb(${r}, ${g}, ${b})`;
       colorGradient.push(color);
     }
@@ -1772,14 +1707,17 @@ function ScatterAxisChart(id, title, subtitle, showLegenda, legendaView, data) {
         text: day,
       });
       singleAxisData.push({
-        left: 150,
+        left: 0,
         type: "category",
         boundaryGap: false,
-        data: hours,
+        data: labels,
         top: (idx * 100) / 7 + 5 + "%",
         height: 100 / 7 - 10 + "%",
         axisLabel: {
-          interval: 2,
+          interval: function (index) {
+            // Show label only for the first, middle, and last ones
+            return index === 7 || index === Math.floor(labels.length / 2) || index === labels.length - 8;
+          }
         },
       });
 
@@ -1819,6 +1757,11 @@ function ScatterAxisChart(id, title, subtitle, showLegenda, legendaView, data) {
     resolve();
   });
 }
+
+
+
+
+
 
 
 
@@ -1925,8 +1868,8 @@ function GaugeChart(id) {
 function FillShapeChart(id) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
-      width: "100%",
-      height: "100%",
+      width: "80%",
+      height: "80%",
     });
 
     const symbols = [

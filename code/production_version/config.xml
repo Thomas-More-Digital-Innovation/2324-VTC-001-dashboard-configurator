@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dashboard primaryColor="#0000FF" secondaryColor="#FF0000">
+<dashboard primaryColor="#090b42" secondaryColor="#29b4cc">
     <screen color="#EEEEEE" title="Schermtitel 1" title-txt-color="black"
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="vmbar" title="Vertical Multiple Bar Chart" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="vertical">
+                <chart type="vmbar" title="Vertical Multiple Bar Chart" width="80%" height="80%" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="horizontal">
                 </chart>
             </section>
         </row>
@@ -13,7 +13,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="hmbar" title="Horizontal Multiple Bar Chart" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="vertical">
+                <chart type="hmbar" title="Horizontal Multiple Bar Chart" width="80%" height="80%" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="horizontal">
                 </chart>
             </section>
         </row>
@@ -22,7 +22,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="stackedbar" title="Stacked Bar Chart" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="vertical">
+                <chart type="stackedbar" title="Stacked Bar Chart" width="80%" height="80%" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="horizontal">
                 </chart>
             </section>
         </row>
@@ -31,7 +31,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="stackedline" title="Stacked Line Chart" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="vertical">
+                <chart type="stackedline" title="Stacked Line Chart" width="80%" height="80%" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="horizontal">
                 </chart>
             </section>
         </row>
@@ -39,7 +39,8 @@
     <!-- <screen color="#EEEEEE" title="Schermtitel 1" title-txt-color="black"
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
-            <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
+            <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black"
+    title-bg-color="white">
                 <chart type="histo">
                 </chart>
             </section>
@@ -49,7 +50,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="donut" title="Donut Chart" subtitle="test" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="vertical">
+                <chart type="donut" title="Donut Chart" width="100%" height="100%" subtitle="test" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="horizontal">
                 </chart>
             </section>
         </row>
@@ -58,7 +59,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="radar" title="Radar Chart" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="vertical">
+                <chart type="radar" title="Radar Chart" width="100%" height="100%"  subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="horizontal">
                 </chart>
             </section>
         </row>
@@ -67,7 +68,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel - Single Nightingale Chart 1" title-txt-color="black" title-bg-color="white">
-                <chart type="sntgale" title="Aantal deelnemers per jaar" subtitle="Op basis van jaarlijkse bevragingen" targetColumn="JAAR bevraging" showLegenda="true" legendaView="horizontal">
+                <chart type="sntgale" title="Aantal deelnemers per jaar" width="100%" height="100%"  subtitle="Op basis van jaarlijkse bevragingen" targetColumn="JAAR bevraging" showLegenda="true" legendaView="horizontal">
                     <item changedName="Het jaar 2021">2021</item>
                     <item changedName="Het jaar 2022">2022</item>
                     <item changedName="Het jaar 2020">2020</item>
@@ -80,7 +81,7 @@
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black"
     title-bg-color="white">
-                <chart type="mntgale" title="Radar Chart" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="vertical">
+                <chart type="mntgale" title="Radar Chart" width="100%" height="100%"  subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="horizontal">
                 </chart>
             </section>
         </row>
@@ -89,7 +90,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="scatterplot">
+                <chart type="scatterplot" width="80%" height="80%" >
                 </chart>
             </section>
         </row>
@@ -98,7 +99,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="scatteraxis" title="Scatter Axis Chart" subtitle="test" targetColumn="L1_ScoreLeefbaarheid_ThemaInrichtingvan de straat;L1_ScoreLeefbaarheid_Sociaal;L1_ScoreLeefbaarheid_Omgevingsfactoren" showLegenda="true" legendaView="vertical">
+                <chart type="scatteraxis" width="80%" height="80%"  title="Scatter Axis Chart" subtitle="test" targetColumn="L1_ScoreLeefbaarheid_ThemaInrichtingvan de straat;L1_ScoreLeefbaarheid_Sociaal;L1_ScoreLeefbaarheid_Omgevingsfactoren" showLegenda="true" legendaView="horizontal">
                 </chart>
             </section>
         </row>
@@ -107,7 +108,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="gauge">
+                <chart type="gauge" width="80%" height="80%" >
                 </chart>
             </section>
         </row>
@@ -116,7 +117,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="fillshape">
+                <chart type="fillshape" width="80%" height="80%" >
                 </chart>
             </section>
         </row>
