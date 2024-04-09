@@ -74,7 +74,7 @@
         title-bg-color="white">
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
-                <chart type="donut" title="Donut Chart" width="100%" height="100%" subtitle="test" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="horizontal">
+                <chart type="pie" title="Donut Chart" width="100%" height="100%" innerCircle="true" subtitle="test" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="horizontal">
                 </chart>
             </section>
         </row>

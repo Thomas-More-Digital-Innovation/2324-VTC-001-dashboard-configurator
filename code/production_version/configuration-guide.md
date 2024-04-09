@@ -1,9 +1,12 @@
-# Configuration Guide - Dashboard Testproject <!-- omit from toc -->
+# Configuration Guide - Dashboard Configurator <!-- omit from toc -->
 
 _by Hube Van Loey_
 
 - [1. The config.xml file](#1-the-configxml-file)
   - [1.1 Setting up the config.xml file](#11-setting-up-the-configxml-file)
+    - [1.1.1 XML tag](#111-xml-tag)
+    - [1.1.2 Dashboard tag](#112-dashboard-tag)
+    - [1.1.3 The starting setup](#113-the-complete-starting-setup)
   - [1.2 Structure Tags](#12-structure-tags)
     - [1.2.1 Screen Tag](#121-screen-tag)
     - [1.2.2 Row Tag](#122-row-tag)
@@ -31,7 +34,7 @@ _by Hube Van Loey_
     - [2.1.2 Add a semicolon ( ; ) to the end of each row](#212-add-a-semicolon----to-the-end-of-each-row)
 - [3. Deploying the dashboard](#3-deploying-the-dashboard)
 
-This Dashboard Testproject Configuration Guide is your go-to resource for crafting tailored, powerful dashboards. Here, we'll explain the process of dashboard creation, offering step-by-step instructions, tips, and best practices. This manual is split up into two parts: The creation of the config.xml file and the .csv-file for loading in the data.
+This Dashboard Configurator Guide is your go-to resource for crafting tailored, powerful dashboards. Here, we'll explain the process of dashboard creation, offering step-by-step instructions, tips, and best practices. This manual is split up into two parts: The creation of the config.xml file and the .csv-file for loading in the data.
 
 <div style="page-break-after: always;"></div>
 
@@ -41,62 +44,85 @@ First of all, it is important to configure the config.xml file. In this file you
 
 ## 1.1 Setting up the config.xml file
 
-To set up the whole config.xml, two important tags must be included:
+To set up the whole config.xml, two important tags must be included.
 
-- `<?xml?>` - tag  
-  This tag is used to specify the xml version and the encoding of the file.
-- `<dashboard>` - tag  
-  This tag is used to initialize the whole dashboard. Everything within these tags will be visible on the dashboard.
+## 1.1.1 XML tag
 
-  After adding these tags to your config.xml-file, it should look something like this:
+The `<?xml?>` tag is used to specify the xml version and the encoding of the file. It is necessary to declare this tag at the top of your config file, so that the software knows this indeed is the right file to handle.
 
-  ```xml
-  <?xml version="1.0" encoding="UTF-8"?>
-  <dashboard>
-    <!-- everything for your dashboard comes here! -->
-  </dashboard>
-  ```
+**Attributes**
+
+- `version=""` | `version="1.0"` | number | required  
+  The version of xml used. It is advised to use the version given in the example.
+
+- `encoding=""` | `encoding="UTF-8"` | text | required  
+  The encoding used for the xml file. It is advised to use the encoding given in the example.
+
+## 1.1.2 Dashboard tag
+
+The `<dashboard>` tag is used to initialize the whole dashboard. Everything between these tags will be visible on the dashboard.
+
+**Attributes**
+
+The first part of styling the dashboard is done immediatly within the `<dashboard>` tag itself. You're able to declare two colors, primary and secondary, that the software will use to fill in the charts. The reason behind this is that most companies/brands use at most 2 to 3 branding colors. This way, each dashboard can be adjusted so that it is completely in line with the theme of a specific company/brand.
+
+- `primaryColor=""` | `primaryColor="#FFF000"` | hexcode | required  
+  The primary color for dashboard charts.
+
+- `secondaryColor=""` | `secondaryColor="#FFF000"` | hexcode | required  
+  The secondary color for dashboard charts.
+
+## 1.1.3 The starting setup
+
+After defining everything as specified above, the starting setup of the config.xml file will look something like this:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<dashboard primaryColor="#FF0000" secondaryColor="#0000FF">
+  <!-- everything for your dashboard comes here! -->
+</dashboard>
+```
 
 <div style="page-break-after: always;"></div>
 
 ## 1.2 Structure Tags
 
-Now that we have declared our dashboard, it's time to structure things. To make this possible, we work with a hierarchical structure of tags. There are a couple details you'll have to keep in mind, which will be explained under the 'Best practices' header.
+Now that we have declared our dashboard and graph colors, it's time to structure things. To make this possible, we work with a hierarchical structure of tags. There are a couple details you'll have to keep in mind, which will be explained under the 'Best practices' header.
 
 ### 1.2.1 Screen Tag
 
-The `<screen` tag is used for declaring a whole screen. Let's say you put 3 of these below eachother, you're dashboard will be 3 times the size of the screen you're watching it on.
+The `<screen>` tag is used for declaring a whole screen. Let's say you put 3 of these below eachother, you're dashboard will be 3 times the size of the screen you're watching it on.
 
 **Attributes**
 
-- `color=""` (optional)  
+- `color=""` | `color="#FFF000"` | hexcode | optional  
   The background color for the screen.
 
-- `title=""` (optional)  
+- `title=""` | `title="Title"` | text | optional  
   The title text.
 
-- `title-txt-color=""` (optional)  
+- `title-txt-color=""` | `title-txt-color="#FFF000"` | hexcode | optional  
   The color for the title text.
 
-- `title-bg-color=""` (optional)  
+- `title-bg-color=""` | `title-bg-color="FFF000"` | hexcode | optional
   The background color for the title element.
 
 ### 1.2.2 Row Tag
 
-Each `<screen>` tag can be divided into different `row` tags. The software automatically ensures that these rows are equal in height regardless of the number. If only one row is declared (minimum), it will be the fit the size of the parent `screen` tag.
+Each `<screen>` tag can be divided into different `row` tags. The software automatically ensures that these rows are equal in height regardless of the number. If only one row is declared (minimum), it will be fit to the size of the parent `screen` tag.
 
 **Attributes**
 
-- `color=""` (optional)  
+- `color=""` | `color="#FFF000"` | hexcode | optional  
   The background color for the screen.
 
-- `title=""` (optional)  
+- `title=""` | `title="Title"` | text | optional  
   The title text.
 
-- `title-txt-color=""` (optional)  
+- `title-txt-color=""` | `title-txt-color="#FFF000"` | hexcode | optional  
   The color for the title text.
 
-- `title-bg-color=""` (optional)  
+- `title-bg-color=""` | `title-bg-color="FFF000"` | hexcode | optional  
   The background color for the title element.
 
 <div style="page-break-after: always;"></div>
@@ -107,7 +133,7 @@ Each row can then in turn be divided into sections. These sections take on the h
 
 **Attributes**
 
-- `width=""` (required)
+- `width=""` | `width="1/1"` | fraction | required
 
   - `1/1` (100% screen width)
   - `3/4` (75% screen width)
@@ -118,34 +144,54 @@ Each row can then in turn be divided into sections. These sections take on the h
 
   The width of the section.
 
-- `color=""` (optional)  
+- `color=""` | `color="#FFF000"` | hexcode | optional  
   The background color for the screen.
 
-- `title=""` (optional)  
+- `title=""` | `title="Title"` | text | optional  
   The title text.
 
-- `title-txt-color=""` (optional)  
+- `title-txt-color=""` | `title-txt-color="#FFF000"` | hexcode | optional  
   The color for the title text.
 
-- `title-bg-color=""` (optional)  
+- `title-bg-color=""` | `title-bg-color="FFF000"` | hexcode | optional  
   The background color for the title element.
 
-_Important note: It is recommended that you always make sure the sections widths sum up to 100% in total_
+_It is recommended that you always make sure the sections widths sum up to 100% in total_
 
 <div style="page-break-after: always;"></div>
 
 ## 1.3 Chart Tags
 
-Once the structure of the dashboard is set up, the charts can be configured with a `<chart>` - tag. Each chart is set up within a `section` - tag and contains different attributes. Some attributes are generally available for all charts, while others are chart-type specific. Below you'll find a list of the attributes you can assign for each chart:
+Once the whole layout of the dashboard is set up, all charts can be configured with a `<chart>` tag. Each chart is set up within a `section` - tag and contains different attributes. Some attributes are generally available for all charts, while others are chart-type specific. Below you'll find a list of the attributes you can assign for each chart.
 
-- `title=""` (optional)  
-  With this attribute, the chart title can be declared.
+**Attributes**
 
-- `subtitle=""` (optional)  
-  With this attribute, the chart subtitle can be declared.
+- `type=""` | `type="bar"` | chart type | required  
+  The chart type.
 
-- `legendaView=""` (optional) - default: `vertical`  
-  With this attribute, the direction of the legenda can be declared. Choose between `vertical` or `horizontal`.
+- `title=""` | `title="Title"` | text | optional  
+  The title for the chart.
+
+- `subtitle=""` | `subtitle="Subtitle"` | text | optional  
+  The subtitle for the chart.
+
+- `width=""` | `width="50%"` | percentage | optional  
+  The width of the chart in percentage.
+
+- `height=""` | `height="50%"` | percentage | optional  
+  The height of the chart in percentage.
+
+- `showLegenda=""` | `showLegenda="false"` (default) | boolean | optional  
+  - `true` (show legenda)
+  - `false` (hide legenda)
+
+  The visability of the legenda. When no value is specified, the default will be used.
+
+- `legendaView=""` | `legendaView="vertical"` (default) | orientation | optional  
+  - `vertical` (legenda oriented vertically)
+  - `horizontal` (legenda oriented horizontally)
+
+  The orientation of the legenda. When no value is specified, the default will be used.
 
 <div style="page-break-after: always;"></div>
 
@@ -153,92 +199,211 @@ Once the structure of the dashboard is set up, the charts can be configured with
 
 A basic chart representing data with rectangular bars where the length or height of the bars corresponds to the value they represent. Best used for comparing discrete categories or showing changes over time.
 
+**Attributes**
+
+- `type="bar"`  
+  The chart type.
+
+- `targetColumn=""` | `targetColumn="Column name"` | target column name | required  
+  The column in the csv with the target data (to be visualized).
+
+**Item tags**
+
+For the simple bar chart, it is possible to manipulate the visualisations even further. Each unique data value should be referred to with an `item` tag.
+
+- `changedName=""` | `changedName="New name"` | new name | optional  
+  The new name for a specific unique value.
 
 ### 1.3.2 Vertical Multiple Bar Chart
 
 A chart displaying multiple sets of data using grouped bars vertically, allowing for easy comparison between different categories across multiple data sets.
 
+**Attributes**
+
+- `type="vbar"`  
+  The chart type.
+
+- `targetColumn=""` | `targetColumn="Column name"` | target column name | required   
+  The column in the csv with the target data (to be visualized).
+
+- `timeColumn=""` | `timeColumn="Column name"` | time column name | required   
+  The column in the csv with the time data (used as time reference).
+
 ### 1.3.3 Horizontal Multiple Bar Chart
 
 Similar to the vertical multiple bar chart, but the bars are displayed horizontally, often used when the category labels are long or when space is limited in the vertical direction.
+
+**Attributes**
+
+- `type="hmbar"`  
+  The chart type.
+
+- `targetColumn=""` | `targetColumn="Column name"` | target column name | required   
+  The column in the csv with the target data (to be visualized).
+
+- `timeColumn=""` | `timeColumn="Column name"` | time column name | required   
+  The column in the csv with the time data (used as time reference).
 
 ### 1.3.4 Stacked Bar Chart
 
 This chart represents multiple data series on top of one another in segments, with each segment representing a proportion of the whole. It's useful for illustrating both total values and how they are divided into different categories.
 
+**Attributes**
+
+- `type="stackedbar"`  
+  The chart type.
+
+- `targetColumn=""` | `targetColumn="Column name"` | target column name | required  
+  The column in the csv with the target data (to be visualized).
+
+- `timeColumn=""` | `timeColumn="Column name"` | time column name | required    
+  The column in the csv with the time data (used as time reference).
+
 ### 1.3.5 Simple Line Chart
 
 A chart that displays data points connected by straight lines, ideal for showing trends or changes over continuous intervals, such as time.
+
+**Attributes**
+
+- `type="line"`  
+  The chart type.
+
+- `targetColumn=""` | `targetColumn="Column name"` | target column name | required  
+  The column in the csv with the target data (to be visualized).
+
+**Item tags**
+
+For the simple line chart, it is possible to manipulate the visualisations even further. Each unique data value should be referred to with an `item` tag.
+
+- `changedName=""` | `changedName="New name"` | new name | optional  
+  The new name for a specific unique value.
 
 ### 1.3.6 Multiple Line Chart
 
 Similar to the simple line chart but displaying multiple lines, often used to compare trends across different data sets.
 
-### 1.3.7 Donut Chart
+**Attributes**
 
-A variation of the pie chart with a hole in the center, useful for displaying data with several categories while also showing the overall relationship of each category to the whole.
+- `type="mline"`  
+  The chart type.
+
+- `targetColumn=""` | `targetColumn="Column name"` | target column name | required   
+  The column in the csv with the target data (to be visualized).
+
+- `timeColumn=""` | `timeColumn="Column name"` | time column name | required   
+  The column in the csv with the time data (used as time reference).
+
+### 1.3.7 Pie/Donut Chart
+
+A circular chart useful for displaying data with several categories while also showing the overall relationship of each category to the whole.
+
+**Attributes**
+
+- `type="pie"`  
+  The chart type.
+
+- `innerCircle=""` | `innerCircle="false"` (default) | boolean | optional  
+  Indicates wether the chart should have an inner circle (donut chart).
+
+- `targetColumn=""` | `targetColumn="Column name"` | target column name | required   
+  The column in the csv with the target data (to be visualized).
 
 ### 1.3.8 Radar Chart
 
 A graphical method of displaying multivariate data in the form of a two-dimensional chart with three or more quantitative variables represented on axes starting from the same point, best suited for comparing performance across different categories.
 
+**Attributes**
+
+- `type="radar"`  
+  The chart type.
+
+- `targetColumn=""` | `targetColumn="Column name"` | target column name | required   
+  The column in the csv with the target data (to be visualized).
+
 ### 1.3.9 Single Nightingale Chart
 
 Also known as a polar area diagram or rose chart, it displays data using concentric circles segmented into sectors, with each sector representing a category. Useful for displaying cyclical patterns or proportions within a dataset.
+
+**Attributes**
+
+- `type="sntgchart"`  
+  The chart type.
+
+- `targetColumn=""` | `targetColumn="Column name"` | target column name | required  
+  The column in the csv with the target data (to be visualized).
+
+**Item tags**
+
+For the single nightingale chart, it is possible to manipulate the visualisations even further. Each unique data value should be referred to with an `item` tag.
+
+- `changedName=""` | `changedName="New name"` | new name | optional  
+  The new name for a specific unique value.
 
 ### 1.3.10 Multiple Nightingale Chart
 
 Similar to the single nightingale chart but displaying multiple datasets, often used to compare cyclical patterns or proportions across different categories.
 
+**Attributes**
+
+- `type="mntgchart"`  
+  The chart type.
+
+- `targetColumn=""` | `targetColumn="Column name"` | target column name | required   
+  The column in the csv with the target data (to be visualized).
+
+- `timeColumn=""` | `timeColumn="Column name"` | time column name | required    
+  The column in the csv with the time data (used as time reference).
+
 ### 1.3.11 Scatter Plot
 
 A graph that shows the relationship between two variables by displaying data points on a two-dimensional plane, helpful for identifying correlations or trends between variables.
+
+**Attributes**
+
+- `type="scatterplot"`  
+  The chart type.
+
+- `targetColumn=""` | `targetColumn="Column name"` | target column name | required   
+  The column in the csv with the target data (to be visualized).
+
+- `timeColumn=""` | `timeColumn="Column name"` | time column name | required    
+  The column in the csv with the time data (used as time reference).
+
+_For this chart, there is no distinction between targetColumn and timeColumn behaviour. Since this scatter plot shows the relation between two variables, the data of both columns is used to plot the graph_
 
 ### 1.3.12 Scatter Axis
 
 A variation of the scatter plot with axis lines added, making it easier to interpret the relationship between variables in terms of scale or magnitude.
 
+**Attributes**
+
+- `type="scatteraxis"`  
+  The chart type.
+
+- `textLeft=""` | `textLeft=""` | text | required     
+  The text shown on the left of the axis.
+
+- `textRight=""` | `textRight=""` | text | required   
+  The text shown on the right of the axis.
+
+- `targetColumn=""` | `targetColumn="Column name 1,Column name 2, Column name 3"` | target column name | required   
+  The columns in the csv with the target data (to be visualized).
+
+_In the targetColumn field for the scatter axis, it is possible to pass the names of multiple columns_
+
 ### 1.3.13 Gauge Chart
 
 A chart that resembles a speedometer or gauge, typically used to display a single value within a known range, ideal for indicating progress towards a goal or target.
 
-<!-- ### 1.3.2 Single Nightingale Chart
+**Attributes**
 
-A single Nightingale chart, also known as a polar area diagram, is a data visualization tool used to display multivariate data in a radial manner. It consists of a series of "petals" or "wedges," with each petal representing a different category or variable. The length of each petal corresponds to the value of the variable it represents, and the angle around the center represents different categories. It's a useful way to compare multiple variables at once and identify patterns or trends within the data.
+- `type="gauge"`  
+  The chart type.
 
-- `type="sntgchart"` (required)  
-  With this attribute, the chart type is declared. This way, the software knows how to set up this specific chart.
-
-- `targetColumn="nameOfTargetColumn"` (required)  
-  With this attribute, the column in the csv from which you want to visualize data is declared.
-
-#### 1.3.2.1 Item Tags (required)
-
-For the single nightingale chart, it is possible to manipulate the visualisations even further. Each unique data value should be referred to with an `item` tag. Once this is done, different attributes can be applied.
-
-- `displayIndex="1"` (optional)  
-  With this attribute, the order in which the unique data values should be displayed in the graph are declared.
-
-- `legendaIndex="1"` (optional)  
-  With this attribute, the order in which the unique data values should be displayed in the legenda are declared.
-
-- `changedName="newName"` (optional)  
-  With this attribute, the name for each unique data value can be adapted.
+- `targetColumn=""` | `targetColumn="Column name"` | target column name | required   
+  The column in the csv with the target data (to be visualized).
 
 <div style="page-break-after: always;"></div>
-
-### 1.3.2 Multiple Nightingale Chart
-
-- `type="mntgchart"` (required)  
-  With this attribute, the chart type is declared. This way, the software knows how to set up this specific chart.
-
-- `timeColumn="nameOfTimeColumn"` (required)  
-  With this attribute, the column in the csv on which you base the time factor is declared.
-
-- `targetColumn="nameOfTargetColumn"` (required)  
-  With this attribute, the column in the csv from which you want to visualize data (based on the time factor) is declared.
-
-<div style="page-break-after: always;"></div> -->
 
 ## 1.4 Best Practices
 

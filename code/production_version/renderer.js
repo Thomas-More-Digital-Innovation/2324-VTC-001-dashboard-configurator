@@ -135,11 +135,8 @@ async function constructPage() {
             )
           );
           break;
-        // case "histo":
-        //   HistogramChart(graphId);
-        //   break;
-        case "donut":
-          DonutChart(
+        case "pie":
+          PieChart(
             graphId,
             graphWidth,
             graphHeight,
@@ -147,7 +144,7 @@ async function constructPage() {
             graphSubTitle,
             showLegenda,
             legendaView,
-            DonutChartCsvParser(content, graphTargetColumn)
+            PieChartCsvParser(content, graphTargetColumn)
           );
           break;
         case "radar":
@@ -428,23 +425,10 @@ function displayXMLContent(xmlDoc) {
                 changedNames: changedNames,
               });
               break;
-            case "histo":
+            case "pie":
               graphsAttributeList.push({
                 type: graphs[l].getAttribute("type"),
-                width: graphs[l].getAttribute("width"),
-                height: graphs[l].getAttribute("height"),
-                title: graphs[l].getAttribute("title"),
-                subtitle: graphs[l].getAttribute("subtitle"),
-                targetColumn: graphs[l].getAttribute("targetColumn"),
-                showLegenda: graphs[l].getAttribute("showLegenda"),
-                legendaView: graphs[l].getAttribute("legendaView"),
-                showLabels: graphs[l].getAttribute("showLabels"),
-                changedNames: changedNames,
-              });
-              break;
-            case "donut":
-              graphsAttributeList.push({
-                type: graphs[l].getAttribute("type"),
+                innerCircle: graphs[l].getAttribute("type"),
                 width: graphs[l].getAttribute("width"),
                 height: graphs[l].getAttribute("height"),
                 title: graphs[l].getAttribute("title"),
@@ -1423,8 +1407,8 @@ function MultipleLineChart(id, width,
 //   });
 // }
 
-// --- Donut Chart --- //
-function DonutChartCsvParser(content, targetColumnName) {
+// --- Pie Chart --- //
+function PieChartCsvParser(content, targetColumnName) {
   const rows = content.split("\n");
   const headers = rows[0].split(";").map((header) => header.trim());
   const targetColumn = headers.indexOf(targetColumnName);
@@ -1450,7 +1434,7 @@ function DonutChartCsvParser(content, targetColumnName) {
   return result;
 }
 
-function DonutChart(id, width, height, title, subtitle, showLegenda, legendaView, data) {
+function PieChart(id, innerCircle, width, height, title, subtitle, showLegenda, legendaView, data) {
   return new Promise((resolve) => {
     let chart = echarts.init(document.getElementById(id), {
       width: width,
@@ -1485,7 +1469,7 @@ function DonutChart(id, width, height, title, subtitle, showLegenda, legendaView
       series: [
         {
           type: "pie",
-          radius: ["40%", "70%"],
+          radius: innerCircle ? ["40%", "70%"] : ["0%", "70%"],
           avoidLabelOverlap: false,
           label: {
             show: false,
