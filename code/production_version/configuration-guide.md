@@ -73,6 +73,8 @@ The first part of styling the dashboard is done immediatly within the `<dashboar
 - `secondaryColor=""` | `secondaryColor="#FFF000"` | hexcode | required  
   The secondary color for dashboard charts.
 
+<div style="page-break-after: always;"></div>
+
 ## 1.1.3 The starting setup
 
 After defining everything as specified above, the starting setup of the config.xml file will look something like this:
@@ -215,6 +217,8 @@ For the simple bar chart, it is possible to manipulate the visualisations even f
 - `changedName=""` | `changedName="New name"` | new name | optional  
   The new name for a specific unique value.
 
+<div style="page-break-after: always;"></div>
+
 ### 1.3.2 Vertical Multiple Bar Chart
 
 A chart displaying multiple sets of data using grouped bars vertically, allowing for easy comparison between different categories across multiple data sets.
@@ -229,6 +233,8 @@ A chart displaying multiple sets of data using grouped bars vertically, allowing
 
 - `timeColumn=""` | `timeColumn="Column name"` | time column name | required   
   The column in the csv with the time data (used as time reference).
+
+<div style="page-break-after: always;"></div>
 
 ### 1.3.3 Horizontal Multiple Bar Chart
 
@@ -245,6 +251,8 @@ Similar to the vertical multiple bar chart, but the bars are displayed horizonta
 - `timeColumn=""` | `timeColumn="Column name"` | time column name | required   
   The column in the csv with the time data (used as time reference).
 
+<div style="page-break-after: always;"></div>
+
 ### 1.3.4 Stacked Bar Chart
 
 This chart represents multiple data series on top of one another in segments, with each segment representing a proportion of the whole. It's useful for illustrating both total values and how they are divided into different categories.
@@ -259,6 +267,8 @@ This chart represents multiple data series on top of one another in segments, wi
 
 - `timeColumn=""` | `timeColumn="Column name"` | time column name | required    
   The column in the csv with the time data (used as time reference).
+
+<div style="page-break-after: always;"></div>
 
 ### 1.3.5 Simple Line Chart
 
@@ -279,6 +289,8 @@ For the simple line chart, it is possible to manipulate the visualisations even 
 - `changedName=""` | `changedName="New name"` | new name | optional  
   The new name for a specific unique value.
 
+<div style="page-break-after: always;"></div>
+
 ### 1.3.6 Multiple Line Chart
 
 Similar to the simple line chart but displaying multiple lines, often used to compare trends across different data sets.
@@ -293,6 +305,8 @@ Similar to the simple line chart but displaying multiple lines, often used to co
 
 - `timeColumn=""` | `timeColumn="Column name"` | time column name | required   
   The column in the csv with the time data (used as time reference).
+
+<div style="page-break-after: always;"></div>
 
 ### 1.3.7 Pie/Donut Chart
 
@@ -309,6 +323,8 @@ A circular chart useful for displaying data with several categories while also s
 - `targetColumn=""` | `targetColumn="Column name"` | target column name | required   
   The column in the csv with the target data (to be visualized).
 
+<div style="page-break-after: always;"></div>
+
 ### 1.3.8 Radar Chart
 
 A graphical method of displaying multivariate data in the form of a two-dimensional chart with three or more quantitative variables represented on axes starting from the same point, best suited for comparing performance across different categories.
@@ -320,6 +336,8 @@ A graphical method of displaying multivariate data in the form of a two-dimensio
 
 - `targetColumn=""` | `targetColumn="Column name"` | target column name | required   
   The column in the csv with the target data (to be visualized).
+
+<div style="page-break-after: always;"></div>
 
 ### 1.3.9 Single Nightingale Chart
 
@@ -340,6 +358,8 @@ For the single nightingale chart, it is possible to manipulate the visualisation
 - `changedName=""` | `changedName="New name"` | new name | optional  
   The new name for a specific unique value.
 
+<div style="page-break-after: always;"></div>
+
 ### 1.3.10 Multiple Nightingale Chart
 
 Similar to the single nightingale chart but displaying multiple datasets, often used to compare cyclical patterns or proportions across different categories.
@@ -354,6 +374,8 @@ Similar to the single nightingale chart but displaying multiple datasets, often 
 
 - `timeColumn=""` | `timeColumn="Column name"` | time column name | required    
   The column in the csv with the time data (used as time reference).
+
+<div style="page-break-after: always;"></div>
 
 ### 1.3.11 Scatter Plot
 
@@ -371,6 +393,8 @@ A graph that shows the relationship between two variables by displaying data poi
   The column in the csv with the time data (used as time reference).
 
 _For this chart, there is no distinction between targetColumn and timeColumn behaviour. Since this scatter plot shows the relation between two variables, the data of both columns is used to plot the graph_
+
+<div style="page-break-after: always;"></div>
 
 ### 1.3.12 Scatter Axis
 
@@ -392,6 +416,8 @@ A variation of the scatter plot with axis lines added, making it easier to inter
 
 _In the targetColumn field for the scatter axis, it is possible to pass the names of multiple columns_
 
+<div style="page-break-after: always;"></div>
+
 ### 1.3.13 Gauge Chart
 
 A chart that resembles a speedometer or gauge, typically used to display a single value within a known range, ideal for indicating progress towards a goal or target.
@@ -403,6 +429,8 @@ A chart that resembles a speedometer or gauge, typically used to display a singl
 
 - `targetColumn=""` | `targetColumn="Column name"` | target column name | required   
   The column in the csv with the target data (to be visualized).
+
+<div style="page-break-after: always;"></div>
 
 ### 1.3.14 Gallery
 
