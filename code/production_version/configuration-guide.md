@@ -25,6 +25,7 @@ _by Hube Van Loey_
     - [1.3.11 Scatter Plot](#1311-scatter-plot)
     - [1.3.12 Scatter Axis](#1312-scatter-axis)
     - [1.3.13 Gauge Chart](#1313-gauge-chart)
+    - [1.3.14 Gallery](#1314-gallery)
   - [1.4 Best Practices](#14-best-practices)
     - [1.4.1 No gaps in hierarchical structure](#141-no-gaps-in-hierarchical-structure)
     - [1.4.2 Evening out the width of section tags](#142-evening-out-the-width-of-section-tags)
@@ -403,6 +404,24 @@ A chart that resembles a speedometer or gauge, typically used to display a singl
 - `targetColumn=""` | `targetColumn="Column name"` | target column name | required   
   The column in the csv with the target data (to be visualized).
 
+### 1.3.14 Gallery
+
+Although this isn't really a chart, the gallery is defined the same way as the other charts. It can be used to display images via accessiable urls, together with a title and text.
+
+**Attributes**
+
+- `type="gallery"`  
+  The chart type.
+
+- `titleColumn=""` | `titleColumn="Column name"` | title column name | optional   
+  The column in the csv with the title data (to be visualized).
+
+- `textColumn=""` | `textColumn="Column name"` | text column name | optional   
+  The column in the csv with the text data (to be visualized).
+
+- `imageColumn=""` | `imageColumn="Column name"` | image column name | optional   
+  The column in the csv with the image data (to be visualized).
+
 <div style="page-break-after: always;"></div>
 
 ## 1.4 Best Practices
@@ -410,6 +429,19 @@ A chart that resembles a speedometer or gauge, typically used to display a singl
 ### 1.4.1 No gaps in hierarchical structure
 
 The current software is set up so that no gaps are tolerated between tags. The code example below shows what (not) to do.
+
+**Bad: dashboard>screen>~~row~~>section>chart (row-tag is missing)**
+
+```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <dashboard>
+    <screen>
+          <section>
+              <chart>
+              </chart>
+          </section>
+  </dashboard>
+```
 
 **Good: dashboard>screen>row>section>chart**
 
@@ -423,19 +455,6 @@ The current software is set up so that no gaps are tolerated between tags. The c
               </chart>
           </section>
         </row>
-  </dashboard>
-```
-
-**Bad: dashboard>screen>~~row~~>section>chart (row-tag is missing)**
-
-```xml
-  <?xml version="1.0" encoding="UTF-8"?>
-  <dashboard>
-    <screen>
-          <section>
-              <chart>
-              </chart>
-          </section>
   </dashboard>
 ```
 
@@ -458,7 +477,6 @@ The software is setup to read csv-files where the separator isn't a comma ( , ) 
 ### 2.1.2 Add a semicolon ( ; ) to the end of each row
 
 To guarantee smooth sailing, a semicolon is to be put at the end of each row.
-_Important note: This is something that occured during bug-fixing; Not really sure wether or not it's actually necessary_
 
 # 3. Deploying the dashboard
 

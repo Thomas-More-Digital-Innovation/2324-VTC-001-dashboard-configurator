@@ -32,9 +32,6 @@
         <row color="#DDDDDD" title="Rijtitel" title-txt-color="black" title-bg-color="white">
             <section width="1/1" color="#CCCCCC" title="Sectietitel" title-txt-color="black" title-bg-color="white">
                 <chart type="vmbar" title="Vertical Multiple Bar Chart" width="80%" height="80%" subtitle="test" timeColumn="JAAR bevraging" targetColumn="10. Hoe lang wil je in de straat wonen?_Clustered" showLegenda="true" legendaView="horizontal">
-                    <item changedName="Het jaar 2020">2020</item>
-                    <item changedName="Het jaar 2021">2021</item>
-                    <item changedName="Het jaar 2022">2022</item>
                 </chart>
             </section>
         </row>
